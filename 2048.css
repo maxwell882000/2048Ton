@@ -14,7 +14,7 @@ hr {
     background-color: #cdc1b5;
     border: 6px solid #bbada0;
 
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     display: flex;
     flex-wrap: wrap;
 }
