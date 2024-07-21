@@ -71,7 +71,7 @@ function handleTouchMove(event) {
     endY = touch.clientY;
 }
 
-function handleTouchEnd() {
+function handleTouchEnd(event) {
     event.preventDefault();
     const deltaX = endX - startX;
     const deltaY = endY - startY;
