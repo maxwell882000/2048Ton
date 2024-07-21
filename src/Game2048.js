@@ -186,7 +186,7 @@ const Game2048 = () => {
 
 
     return (
-        <div>
+        <div style={{marginTop: 20}}>
             <div>Score: {score}</div>
             <div id="board"
                  onTouchStart={onTouchStart}
