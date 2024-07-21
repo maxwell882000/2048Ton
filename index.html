@@ -3,7 +3,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2048</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="2048.css">
     <script src="2048.js"></script>
 </head>
@@ -13,12 +12,5 @@
 <h2>Score: <span id="score">0</span></h2>
 
 <div id="board"></div>
-
-<script>
-    Telegram.WebApp.expand()
-    window.addEventListener("touchmove", (e) => e.preventDefault(), {passive: false});
-    window.scrollTo(0, 100);
-    Telegram.WebApp.ready()
-</script>
 </body>
 </html>

@@ -6,6 +6,9 @@ const Game2048 = () => {
     const rows = 4;
     const columns = 4;
 
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
+
     const setGame = useCallback(() => {
         const newBoard = Array(rows).fill().map(() => Array(columns).fill(0));
         setBoard(newBoard);
@@ -23,6 +26,54 @@ const Game2048 = () => {
             className: `tile x${num <= 4096 ? num : 8192}`,
             innerText: num.toString()
         };
+    };
+
+
+    const handleSwipe = useCallback(() => {
+        if (!touchStart || !touchEnd) return;
+        const distanceX = touchStart.x - touchEnd.x;
+        const distanceY = touchStart.y - touchEnd.y;
+        const isHorizontal = Math.abs(distanceX) > Math.abs(distanceY);
+
+        let newBoard;
+        if (isHorizontal) {
+            if (distanceX > 20) {
+                newBoard = slideLeft(board);
+            } else if (distanceX < -20) {
+                newBoard = slideRight(board);
+            }
+        } else {
+            if (distanceY > 20) {
+                newBoard = slideUp(board);
+            } else if (distanceY < -20) {
+                newBoard = slideDown(board);
+            }
+        }
+
+        if (newBoard) {
+            setTwo(newBoard);
+        }
+    }, [board, touchStart, touchEnd]);
+
+    const onTouchStart = (e) => {
+        setTouchEnd(null);
+        setTouchStart({
+            x: e.targetTouches[0].clientX,
+            y: e.targetTouches[0].clientY
+        });
+    };
+
+    const onTouchMove = (e) => {
+        setTouchEnd({
+            x: e.targetTouches[0].clientX,
+            y: e.targetTouches[0].clientY
+        });
+    };
+    
+    const onTouchEnd = () => {
+        handleSwipe();
+        setTouchStart(null);
+        setTouchEnd(null);
     };
 
     const filterZero = (row) => row.filter(num => num !== 0);
@@ -130,7 +181,10 @@ const Game2048 = () => {
     return (
         <div>
             <div>Score: {score}</div>
-            <div id="board">
+            <div id="board"
+                 onTouchStart={onTouchStart}
+                 onTouchMove={onTouchMove}
+                 onTouchEnd={onTouchEnd}>
                 {board.map((row, r) => (
                     row.map((cell, c) => {
                         const {className, innerText} = updateTile(cell);
