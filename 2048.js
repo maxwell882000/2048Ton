@@ -3,7 +3,7 @@ var score = 0;
 var rows = 4;
 var columns = 4;
 
-window.onload = function() {
+window.onload = function () {
     setGame();
 }
 
@@ -44,12 +44,34 @@ function updateTile(tile, num) {
     if (num > 0) {
         tile.innerText = num.toString();
         if (num <= 4096) {
-            tile.classList.add("x"+num.toString());
+            tile.classList.add("x" + num.toString());
         } else {
             tile.classList.add("x8192");
         }
     }
 }
+
+
+function ensureDocumentIsScrollable() {
+    const isScrollable =
+        document.documentElement.scrollHeight > window.innerHeight;
+    // Check if the document is scrollable
+    if (!isScrollable) {
+        /*
+        Set the document's height to 100 % of
+        the viewport height plus one extra pixel
+        to make it scrollable.
+        */
+        document.documentElement.style.setProperty(
+            "height",
+            "calc(100vh + 1px)",
+            "important"
+        );
+    }
+}
+
+window.addEventListener("load", ensureDocumentIsScrollable);
+
 
 let startX, startY, endX, endY;
 
@@ -59,6 +81,9 @@ document.addEventListener('touchend', handleTouchEnd);
 
 function handleTouchStart(event) {
     event.preventDefault();
+    if (window.scrollY === 0) {
+        window.scrollTo(0, 1);
+    }
     const touch = event.touches[0];
     startX = touch.clientX;
     startY = touch.clientY;
@@ -123,34 +148,31 @@ document.addEventListener('keyup', (e) => {
     if (e.code == "ArrowLeft") {
         slideLeft();
         setTwo();
-    }
-    else if (e.code == "ArrowRight") {
+    } else if (e.code == "ArrowRight") {
         slideRight();
         setTwo();
-    }
-    else if (e.code == "ArrowUp") {
+    } else if (e.code == "ArrowUp") {
         slideUp();
         setTwo();
 
-    }
-    else if (e.code == "ArrowDown") {
+    } else if (e.code == "ArrowDown") {
         slideDown();
         setTwo();
     }
     document.getElementById("score").innerText = score;
 })
 
-function filterZero(row){
+function filterZero(row) {
     return row.filter(num => num != 0); //create new array of all nums != 0
 }
 
 function slide(row) {
     //[0, 2, 2, 2] 
     row = filterZero(row); //[2, 2, 2]
-    for (let i = 0; i < row.length-1; i++){
-        if (row[i] == row[i+1]) {
+    for (let i = 0; i < row.length - 1; i++) {
+        if (row[i] == row[i + 1]) {
             row[i] *= 2;
-            row[i+1] = 0;
+            row[i + 1] = 0;
             score += row[i];
         }
     } //[4, 0, 2]
@@ -167,7 +189,7 @@ function slideLeft() {
         let row = board[r];
         row = slide(row);
         board[r] = row;
-        for (let c = 0; c < columns; c++){
+        for (let c = 0; c < columns; c++) {
             let tile = document.getElementById(r.toString() + "-" + c.toString());
             let num = board[r][c];
             updateTile(tile, num);
@@ -181,7 +203,7 @@ function slideRight() {
         row.reverse();              //[2, 2, 2, 0]
         row = slide(row)            //[4, 2, 0, 0]
         board[r] = row.reverse();   //[0, 0, 2, 4];
-        for (let c = 0; c < columns; c++){
+        for (let c = 0; c < columns; c++) {
             let tile = document.getElementById(r.toString() + "-" + c.toString());
             let num = board[r][c];
             updateTile(tile, num);
@@ -197,7 +219,7 @@ function slideUp() {
         // board[1][c] = row[1];
         // board[2][c] = row[2];
         // board[3][c] = row[3];
-        for (let r = 0; r < rows; r++){
+        for (let r = 0; r < rows; r++) {
             board[r][c] = row[r];
             let tile = document.getElementById(r.toString() + "-" + c.toString());
             let num = board[r][c];
@@ -216,7 +238,7 @@ function slideDown() {
         // board[1][c] = row[1];
         // board[2][c] = row[2];
         // board[3][c] = row[3];
-        for (let r = 0; r < rows; r++){
+        for (let r = 0; r < rows; r++) {
             board[r][c] = row[r];
             let tile = document.getElementById(r.toString() + "-" + c.toString());
             let num = board[r][c];
