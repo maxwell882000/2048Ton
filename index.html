@@ -1,25 +1,75 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>2048</title>-->
+<!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
+<!--    <link rel="stylesheet" href="2048.css">-->
+<!--    <script src="2048.js"></script>-->
+
+<!--</head>-->
+<!--<body>-->
+<!--<h1 style="color:blue; font-size: 50px" id="main">2048</h1>-->
+<!--<hr>-->
+<!--<h2>Score: <span id="score">0</span></h2>-->
+<!--<div id="board"></div>-->
+<!--</body>-->
+<!--<script>-->
+<!--    // Ensure the document is scrollable-->
+<!--    window.Telegram.WebApp.disableVerticalSwipes()-->
+<!--    document.getElementById("main").textContent = '2048 changed 2' + window.Telegram.WebApp.initData-->
+
+
+<!--</script>-->
+<!--</html>-->
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2048</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="2048.css">
-    <script src="2048.js"></script>
-
+    <style>
+        .scrollable-element {
+            overflow-y: scroll;
+            height: 32rem;
+            font-size: 6.25rem;
+            border: 1px solid;
+        }
+    </style>
 </head>
 <body>
-<h1 style="color:blue; font-size: 50px" id="main">2048</h1>
-<hr>
-<h2>Score: <span id="score">0</span></h2>
-<div id="board"></div>
-</body>
+<div class="scrollable-element">
+    <div>Item 1</div>
+    <div>Item 2</div>
+    <div>Item 3</div>
+    <div>Item 4</div>
+    <div>Item 5</div>
+    <div>Item 6</div>
+    <div>Item 7</div>
+    <div>Item 8</div>
+    <div>Item 9</div>
+    <div>Item 10</div>
+</div>
 <script>
-    // Ensure the document is scrollable
-    window.Telegram.WebApp.disableVerticalSwipes()
-    document.getElementById("main").textContent = '2048 changed 2' + window.Telegram.WebApp.initData
+    function ensureDocumentIsScrollable() {
+        const isScrollable =
+            document.documentElement.scrollHeight > window.innerHeight;
+        if (!isScrollable) {
+            document.documentElement.style.setProperty(
+                "height",
+                "calc(100vh + 1px)",
+                "important"
+            );
+        }
+    }
 
+    function preventCollapse() {
+        if (window.scrollY === 0) {
+            window.scrollTo(0, 1);
+        }
+    }
 
+    const scrollableElement = document.querySelector(".scrollable-element");
+    scrollableElement.addEventListener("touchstart", preventCollapse);
+
+    window.addEventListener("load", ensureDocumentIsScrollable);
 </script>
+</body>
 </html>
