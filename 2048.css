@@ -1,8 +1,6 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
 }
 
 #board {
@@ -12,8 +10,6 @@ html, body {
     border: 6px solid #bbada0;
     margin: 0 auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-wrap: wrap;
 }
 
