@@ -8,13 +8,6 @@ window.onload = function () {
 }
 
 function setGame() {
-    // board = [
-    //     [2, 2, 2, 2],
-    //     [2, 2, 2, 2],
-    //     [4, 4, 8, 8],
-    //     [4, 4, 8, 8]
-    // ];
-
     board = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -50,28 +43,6 @@ function updateTile(tile, num) {
         }
     }
 }
-
-
-function ensureDocumentIsScrollable() {
-    const isScrollable =
-        document.documentElement.scrollHeight > window.innerHeight;
-    // Check if the document is scrollable
-    if (!isScrollable) {
-        /*
-        Set the document's height to 100 % of
-        the viewport height plus one extra pixel
-        to make it scrollable.
-        */
-        document.documentElement.style.setProperty(
-            "height",
-            "calc(100vh + 1px)",
-            "important"
-        );
-    }
-}
-
-window.addEventListener("load", ensureDocumentIsScrollable);
-
 
 let startX, startY, endX, endY;
 
