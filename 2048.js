@@ -58,18 +58,21 @@ document.addEventListener('touchmove', handleTouchMove);
 document.addEventListener('touchend', handleTouchEnd);
 
 function handleTouchStart(event) {
+    event.preventDefault();
     const touch = event.touches[0];
     startX = touch.clientX;
     startY = touch.clientY;
 }
 
 function handleTouchMove(event) {
+    event.preventDefault();
     const touch = event.touches[0];
     endX = touch.clientX;
     endY = touch.clientY;
 }
 
 function handleTouchEnd() {
+    event.preventDefault();
     const deltaX = endX - startX;
     const deltaY = endY - startY;
 
