@@ -10,7 +10,7 @@ const Game2048 = () => {
     const [touchEnd, setTouchEnd] = useState(null);
 
     const setGame = useCallback(() => {
-        const newBoard = Array(rows).fill().map(() => Array(columns).fill(0));
+        const newBoard = Array(rows).fill().map(() => Array(columns).fill({value: 0, isNew: false}));
         setBoard(newBoard);
         setTwo(newBoard);
         setTwo(newBoard);
@@ -20,11 +20,18 @@ const Game2048 = () => {
         setGame();
     }, [setGame]);
 
-    const updateTile = (num) => {
-        if (num === 0) return {className: 'tile', innerText: ''};
+    const getTilePosition = (row, col) => {
         return {
-            className: `tile x${num <= 4096 ? num : 8192}`,
-            innerText: num.toString()
+            left: `${col * 75}px`,
+            top: `${row * 75}px`
+        };
+    };
+
+    const updateTile = (cell) => {
+        if (cell.value === 0) return {className: 'tile', innerText: ''};
+        return {
+            className: `tile x${cell.value <= 4096 ? cell.value : 8192}${cell.isNew ? ' tile-new' : ''}`,
+            innerText: cell.value.toString()
         };
     };
 
@@ -69,7 +76,7 @@ const Game2048 = () => {
             y: e.targetTouches[0].clientY
         });
     };
-    
+
     const onTouchEnd = () => {
         handleSwipe();
         setTouchStart(null);
@@ -79,17 +86,17 @@ const Game2048 = () => {
     const filterZero = (row) => row.filter(num => num !== 0);
 
     const slide = (row) => {
-        let newRow = filterZero(row);
+        let newRow = row.filter(cell => cell.value !== 0);
         for (let i = 0; i < newRow.length - 1; i++) {
-            if (newRow[i] === newRow[i + 1]) {
-                newRow[i] *= 2;
-                newRow[i + 1] = 0;
-                setScore(prevScore => prevScore + newRow[i]);
+            if (newRow[i].value === newRow[i + 1].value) {
+                newRow[i] = {value: newRow[i].value * 2, isNew: false};
+                newRow[i + 1] = {value: 0, isNew: false};
+                setScore(prevScore => prevScore + newRow[i].value);
             }
         }
-        newRow = filterZero(newRow);
+        newRow = newRow.filter(cell => cell.value !== 0);
         while (newRow.length < columns) {
-            newRow.push(0);
+            newRow.push({value: 0, isNew: false});
         }
         return newRow;
     };
@@ -138,15 +145,15 @@ const Game2048 = () => {
         do {
             r = Math.floor(Math.random() * rows);
             c = Math.floor(Math.random() * columns);
-        } while (currentBoard[r][c] !== 0);
-        const newBoard = currentBoard.map(row => [...row]);
-        newBoard[r][c] = 2;
+        } while (currentBoard[r][c].value !== 0);
+        const newBoard = currentBoard.map(row => row.map(cell => ({...cell})));
+        newBoard[r][c] = {value: 2, isNew: true};
         setBoard(newBoard);
         return newBoard;
     };
 
     const hasEmptyTile = (currentBoard) => {
-        return currentBoard.some(row => row.some(cell => cell === 0));
+        return currentBoard.some(row => row.some(cell => cell.value === 0));
     };
 
     const handleKeyDown = useCallback((event) => {
@@ -188,8 +195,13 @@ const Game2048 = () => {
                 {board.map((row, r) => (
                     row.map((cell, c) => {
                         const {className, innerText} = updateTile(cell);
+                        const position = getTilePosition(r, c);
                         return (
-                            <div key={`${r}-${c}`} className={className}>
+                            <div
+                                key={`${r}-${c}`}
+                                className={className}
+                                style={position}
+                            >
                                 {innerText}
                             </div>
                         );
