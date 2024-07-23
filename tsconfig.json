@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    // Target ECMAScript version
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    // Libraries to include in the compilation
+    "allowJs": true,
+    // Allow JavaScript files to be compiled
+    "skipLibCheck": true,
+    // Skip type checking of declaration files
+    "strict": true,
+    // Enable all strict type-checking options
+    "forceConsistentCasingInFileNames": true,
+    // Enforce consistent casing in filenames
+    "noEmit": true,
+    // Do not emit output files
+    "esModuleInterop": true,
+    // Enable emit interoperability between CommonJS and ES Modules
+    "module": "esnext",
+    // Module code generation
+    "moduleResolution": "node",
+    // Module resolution strategy
+    "resolveJsonModule": true,
+    // Allow importing JSON files
+    "isolatedModules": true,
+    // Ensure that each file can be safely transpiled
+    "jsx": "react-jsx",
+    // JSX code generation mode for React 17+
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/telegram-webapps"
+      //      "./src/types"
+      // Custom type definitions directory
+    ]
+  },
+  "include": [
+    "src"
+    // Include the source files
+  ],
+  "exclude": [
+    "node_modules",
+    // Exclude node_modules
+    "**/*.test.ts",
+    // Exclude test files (optional)
+    "**/*.test.tsx"
+    // Exclude test files (optional)
+  ]
+}
