@@ -1,6 +1,23 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "compilerOptions": {
+    "target": "es5",
     // Target ECMAScript version
     "lib": [
       "dom",
@@ -29,13 +46,6 @@
     "isolatedModules": true,
     // Ensure that each file can be safely transpiled
     "jsx": "react-jsx",
-    // JSX code generation mode for React 17+
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/telegram-webapps"
-      //      "./src/types"
-      // Custom type definitions directory
-    ]
   },
   "include": [
     "src"

@@ -1,31 +1,38 @@
+@font-face {
+    font-family: 'Digitalt';
+    src: url("asset/digitalt/Digitalt.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
-    --color-board: #cdc1b5;
+    --color-board: #FFFF;
     --color-board-border: #bbada0;
     --color-tile-border: #bbada0
 }
 
 #board {
-    width: 300px;
-    height: 300px;
+    width: 18.75rem;
+    height: 18.75rem;
     background-color: var(--color-board);
-    border: 6px solid var(--color-board-border);
     margin: 0 auto;
     position: relative;
 }
 
 .tile {
-    width: 65px;
-    height: 65px;
-    border: 5px solid var(--color-board-border);
+    width: 4.06rem;
+    height: 4.06rem;
     font-size: 30px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    transition: all 0.15s ease-in-out;
+    /*transition: left 0.1s linear, top 0.1s linear;*/
 }
-
+/*.tile-appear {*/
+/*    animation: appear 0.2s ease-in-out;*/
+/*}*/
 @keyframes appear {
     0% {
         opacity: 0;
@@ -38,8 +45,10 @@
 }
 
 .tile-new {
-    animation: appear 0.2s ease-in-out;
+    /*animation: appear 1s ease-in-out;*/
 }
+
+
 
 /* colored tiles */
 

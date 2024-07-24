@@ -1,25 +1,21 @@
-import {MoveTileService} from "../../services/game/moveTileService";
+import {TileService} from "../../services/game/tileService";
 import {useCallback, useEffect, useState} from "react";
-import {Tile} from "../../dtos/game/tile";
-import {Coordinate} from "../../dtos/game/coordinate";
-import {COLUMN, ROW} from "../../constants/game_dimension";
+import {TileDto} from "../../dtos/game/tileDto";
+import {CoordinateDto} from "../../dtos/game/coordinateDto";
+import {BoardService} from "../../services/game/boardService";
+import {TestGameService} from "../../services/game/testGameService";
 
 export function useGame() {
-    const tileService = new MoveTileService();
-    const [board, setBoard] = useState<Tile[][]>([]);
+    const tileService = new TileService();
+    const boardService = new BoardService();
+    const testEndService = new TestGameService();
+    const [board, setBoard] = useState<TileDto[][]>([]);
     const [score, setScore] = useState(0);
-    const [touchStart, setTouchStart] = useState<Coordinate | null>();
-    const [touchEnd, setTouchEnd] = useState<Coordinate | null>();
+    const [touchStart, setTouchStart] = useState<CoordinateDto | null>();
+    const [touchEnd, setTouchEnd] = useState<CoordinateDto | null>();
 
     const setGame = useCallback(() => {
-        let newBoard = Array(ROW).fill(null).map(() => Array(COLUMN).fill({
-            value: 0,
-            isNew: false,
-            cumulated: 0
-        } as Tile));
-
-        newBoard = tileService.generateTile(newBoard);
-        newBoard = tileService.generateTile(newBoard);
+        let newBoard = boardService.generateBoard();
         setBoard(newBoard);
     }, []);
 
@@ -34,7 +30,7 @@ export function useGame() {
         const distanceY = touchStart.y - touchEnd.y;
         const isHorizontal = Math.abs(distanceX) > Math.abs(distanceY);
 
-        let newBoard: any;
+        let newBoard: TileDto[][] | null = null;
         if (isHorizontal) {
             if (distanceX > 20) {
                 newBoard = tileService.slideLeft(board);
@@ -49,9 +45,10 @@ export function useGame() {
             }
         }
         if (newBoard) {
-            newBoard = tileService.generateTile(newBoard);
-            setBoard(newBoard);
-            tileService.testEndGame(newBoard);
+            setScore(newBoard.flatMap(e => e).reduce((sum, cur) => sum + (cur.cumulated ?? 0), 0))
+            newBoard = boardService.generateTile(newBoard);
+            setBoard(newBoard as TileDto[][]);
+            testEndService.testEndGame(newBoard as TileDto[][]);
         }
     }, [board, touchStart, touchEnd]);
 
@@ -78,7 +75,7 @@ export function useGame() {
     };
 
     const handleKeyDown = useCallback((event: any) => {
-        let newBoard: any[][];
+        let newBoard: TileDto[][];
         switch (event.code) {
             case 'ArrowLeft':
                 newBoard = tileService.slideLeft(board);
@@ -96,9 +93,10 @@ export function useGame() {
                 return;
         }
         setScore(newBoard.flatMap(e => e).reduce((sum, cur) => sum + (cur.cumulated ?? 0), 0))
-        newBoard = tileService.generateTile(newBoard);
+        newBoard = boardService.generateTile(newBoard);
+        console.log(newBoard.flatMap(e => e));
         setBoard(newBoard);
-        tileService.testEndGame(newBoard);
+        testEndService.testEndGame(newBoard);
     }, [board]);
 
     useEffect(() => {

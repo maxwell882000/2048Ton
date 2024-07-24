@@ -1,10 +1,18 @@
 import './App.css';
-import Game2048 from "./Game2048";
+import {Layout} from "./components/layout/Layout";
+import {ReactNode} from "react";
 
-function App() {
+interface AppProps {
+    children: ReactNode;
+}
+
+function App({children}: AppProps) {
     return (
-        <Game2048></Game2048>
-    );
+        <Layout>
+            {children}
+        </Layout>
+    )
+
 }
 
 export default App;
