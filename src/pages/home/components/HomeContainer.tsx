@@ -2,7 +2,7 @@ import {Container} from "../../../components/container/Container";
 import {MoneyIcon} from "../../../components/icons/MoneyIcon";
 import CountdownTimer from "./CountdownTimer";
 import {LightingIcon} from "../../../components/icons/LightingIcon";
-import numeral from "numeral";
+import {formatNumber} from "../../../utils/formatNumber";
 
 export const HomeContainer = () => {
     return (
@@ -10,7 +10,7 @@ export const HomeContainer = () => {
             <div className="flex flex-row justify-center items-center space-x-2">
                 <div><MoneyIcon/></div>
                 <div><span
-                    className="text-[#7454FE] tracking-[0.1rem] text-[2.9rem]">{numeral(421412412421).format('0.[000]a').toUpperCase()}</span>
+                    className="text-[#7454FE] tracking-[0.1rem] text-[2.9rem]">{formatNumber(421412412421)}</span>
                 </div>
 
             </div>

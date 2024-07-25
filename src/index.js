@@ -10,11 +10,11 @@ import App from "./App";
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/2048Ton",
         element: <HomePage/>,
     },
     {
-        path: "/game",
+        path: "/2048Ton/game",
         element: <GamePage/>,
     },
 ]);

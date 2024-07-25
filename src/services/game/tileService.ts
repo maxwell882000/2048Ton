@@ -2,14 +2,13 @@ import {TileDto} from "../../dtos/game/tileDto";
 import {COLUMN, ROW} from "../../constants/game_dimension";
 import {v4 as uuidv4} from "uuid";
 import {TurnDto} from "../../dtos/game/turnDto";
+import {BoardService} from "./boardService";
 
 export class TileService {
-    private readonly rows: number;
-    private readonly columns: number;
+    private boardService: BoardService;
 
-    constructor() {
-        this.rows = ROW;
-        this.columns = COLUMN;
+    constructor(boardService: BoardService) {
+        this.boardService = boardService;
     }
 
     _fillBoard() {
@@ -40,11 +39,12 @@ export class TileService {
                 newRow[i].isMerged = false;
             }
         }
+        let newZeros = newRow.filter(cell => cell.value === 0);
+
         newRow = newRow.filter(cell => cell.value !== 0);
-        while (newRow.length < this.columns) {
-            newRow.push({uniqueId: uuidv4(), value: 0, isNew: false, cumulated: 0});
-        }
-        return newRow;
+        newRow.push(...row.filter(cell => cell.value === 0))
+        newRow.push(...newZeros)
+        return newRow
     }
 
 
@@ -58,10 +58,10 @@ export class TileService {
 
     slideUp(currentBoard: TileDto[][]) {
         const newBoard = this._fillBoard();
-        for (let c = 0; c < this.columns; c++) {
+        for (let c = 0; c < COLUMN; c++) {
             const column = currentBoard.map(row => row[c]);
             const newColumn = this.slide(column);
-            for (let r = 0; r < this.rows; r++) {
+            for (let r = 0; r < ROW; r++) {
                 newBoard[r][c] = newColumn[r];
             }
         }
@@ -70,27 +70,45 @@ export class TileService {
 
     slideDown(currentBoard: TileDto[][]) {
         const newBoard = this._fillBoard();
-        for (let c = 0; c < this.columns; c++) {
+        for (let c = 0; c < COLUMN; c++) {
             const column = currentBoard.map(row => row[c]).reverse();
             const newColumn = this.slide(column).reverse();
-            for (let r = 0; r < this.rows; r++) {
+            for (let r = 0; r < ROW; r++) {
                 newBoard[r][c] = newColumn[r];
             }
         }
         return newBoard;
     };
 
-    slideTo(turn: TurnDto, board: TileDto[][]) {
+    slideTo(turn: TurnDto) {
+        let newBoard: TileDto[][];
+        const board = this.boardService.getPositionBoard();
         switch (turn) {
             case TurnDto.DOWN:
-                return this.slideDown(board)
+                newBoard = this.slideDown(board)
+                break;
             case TurnDto.UP:
-                return this.slideUp(board)
+                newBoard = this.slideUp(board)
+                break;
             case TurnDto.RIGHT:
-                return this.slideRight(board)
+                newBoard = this.slideRight(board)
+                break;
             case TurnDto.LEFT:
-                return this.slideLeft(board)
+                newBoard = this.slideLeft(board)
+                break;
         }
+        if (newBoard) {
+            console.log(newBoard);
+            this.updateTiles(newBoard);
+            this.boardService.setPositionBoard(newBoard);
+        }
+        return this.boardService.getCopyBoard();
+    }
+
+    updateTiles(currentBoard: TileDto[][]) {
+        currentBoard.flatMap(tile => tile).forEach((tile, index) => {
+            this.boardService.setTile(tile, index % 4, Math.floor(index / 4));
+        });
     }
 
 }

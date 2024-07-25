@@ -4,4 +4,8 @@ export interface TileDto {
     isNew: boolean;
     cumulated: number;
     isMerged?: boolean;
+    position?: {
+        left: number;
+        top: number;
+    }
 }

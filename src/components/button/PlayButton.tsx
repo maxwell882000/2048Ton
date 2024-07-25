@@ -3,7 +3,7 @@ import {Button} from "./Button";
 
 interface PlayButtonProps {
     width?: string,
-    onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
+    onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined
 }
 
 const PlayButton = (props: PlayButtonProps) => {

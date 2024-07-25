@@ -1,51 +1,51 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo, useState} from "react";
 import {TileDto} from "../../../dtos/game/tileDto";
+import {ANIMATION_MULTIPLIER, TILE_SIZE} from "../../../constants/game_dimension";
+import {moveDuration} from "../../../utils/moveDuration";
+import {formatNumber} from "../../../utils/formatNumber";
 
 interface TileProps {
     tile: TileDto,
-    row: number,
-    col: number
 }
 
-export const Tile: React.FC<TileProps> = ({tile, row, col}: TileProps) => {
-    const [merged, setMerged] = useState<boolean>(false);
+export const Tile: React.FC<TileProps> = ({tile}: TileProps) => {
     const [style, setStyle] = useState<any>();
     const [prevPosition, setPrevPosition] = useState<{ left: number, top: number }>();
 
     const {className, innerText} = useMemo(() => {
-        if (tile.value === 0) return {className: 'tile-new', innerText: ''};
+        if (tile.value === -1) return {className: 'tile tile-zero', innerText: ''};
+        if (tile.value === 0) return {className: '', innerText: ''};
         return {
-            className: `tile x${tile.value <= 4096 ? tile.value : 8192}${tile.isNew ? ' tile-new' : ''}`,
-            innerText: tile.value.toString()
+            className: `tile x${tile.value <= 4096 ? tile.value : 65536}${tile.isNew ? ' tile-new' : ''}  ${tile.isMerged ? ' tile-appear' : ''}`,
+            innerText: tile.value
         };
-    }, [tile.value, tile.isNew, tile.isMerged, setMerged]);
+    }, [tile.value, tile.isNew, tile.isMerged]);
 
     const {position} = useMemo(() => {
+        if (prevPosition) {
+            const leftDuration = Math.max(Math.abs(prevPosition.left - (tile.position?.left ?? 0)), 0) / (TILE_SIZE * ANIMATION_MULTIPLIER);
+            const topDuration = Math.max(Math.abs(prevPosition.top - (tile.position?.top ?? 0)), 0) / (TILE_SIZE * ANIMATION_MULTIPLIER);
+            setStyle({
+                transition: `left ${leftDuration}s linear, top ${topDuration}s linear`,
+            })
+            setTimeout(() => {
+                setStyle({});
+            }, moveDuration())
+        }
+        setPrevPosition({left: tile.position?.left ?? 0, top: tile.position?.top ?? 0,});
         return {
             position: {
-                left: `${col * 75}px`,
-                top: `${row * 75}px`
+                left: `${tile.position?.left}px`,
+                top: `${tile.position?.top}px`
             }
         };
-    }, [col, row])
-
-    // useEffect(() => {
-    //     if (prevPosition) {
-    //         const leftDuration = Math.max(Math.abs(prevPosition.left - col * 75), 0) / 75;
-    //         const topDuration = Math.max(Math.abs(prevPosition.top - row * 75), 0) / 75;
-    //         setStyle({
-    //             transition: `left ${leftDuration}s linear, top ${topDuration}s linear`,
-    //         })
-    //     }
-    //     setPrevPosition({left: col * 75, top: row * 75});
-    //
-    // }, [col, row]);
+    }, [tile.position]);
 
 
-    return <span
+    return <div
         className={className}
         style={{...position, ...style}}
     >
-        {innerText}
-   </span>
+        {formatNumber(innerText, "0a")}
+    </div>
 }

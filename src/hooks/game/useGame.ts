@@ -1,21 +1,25 @@
-import {TileService} from "../../services/game/tileService";
 import {useCallback, useEffect, useState} from "react";
 import {TileDto} from "../../dtos/game/tileDto";
 import {CoordinateDto} from "../../dtos/game/coordinateDto";
-import {BoardService} from "../../services/game/boardService";
-import {TestGameService} from "../../services/game/testGameService";
+import Container from "../../containers/container";
+import {TurnDto} from "../../dtos/game/turnDto";
+import {moveDuration} from "../../utils/moveDuration";
+import {APPEAR_DURATION} from "../../constants/game_dimension";
 
 export function useGame() {
-    const tileService = new TileService();
-    const boardService = new BoardService();
-    const testEndService = new TestGameService();
+    const tileService = Container.getTileService();
+    const boardService = Container.getBoardService();
+    const testEndService = Container.getTestGameService();
     const [board, setBoard] = useState<TileDto[][]>([]);
+    const [isEndGame, setEndGame] = useState(false);
     const [score, setScore] = useState(0);
     const [touchStart, setTouchStart] = useState<CoordinateDto | null>();
     const [touchEnd, setTouchEnd] = useState<CoordinateDto | null>();
 
     const setGame = useCallback(() => {
         let newBoard = boardService.generateBoard();
+        setEndGame(false);
+        setScore(0);
         setBoard(newBoard);
     }, []);
 
@@ -29,27 +33,19 @@ export function useGame() {
         const distanceX = touchStart.x - touchEnd.x;
         const distanceY = touchStart.y - touchEnd.y;
         const isHorizontal = Math.abs(distanceX) > Math.abs(distanceY);
-
-        let newBoard: TileDto[][] | null = null;
-        if (isHorizontal) {
-            if (distanceX > 20) {
-                newBoard = tileService.slideLeft(board);
-            } else if (distanceX < -20) {
-                newBoard = tileService.slideRight(board);
-            }
+        const isVertical = !isHorizontal;
+        if (distanceX > 20 && isHorizontal) {
+            tileService.slideTo(TurnDto.LEFT);
+        } else if (distanceX < -20 && isHorizontal) {
+            tileService.slideTo(TurnDto.RIGHT);
+        } else if (distanceY > 20 && isVertical) {
+            tileService.slideTo(TurnDto.UP);
+        } else if (distanceY < -20 && isVertical) {
+            tileService.slideTo(TurnDto.DOWN);
         } else {
-            if (distanceY > 20) {
-                newBoard = tileService.slideUp(board);
-            } else if (distanceY < -20) {
-                newBoard = tileService.slideDown(board);
-            }
+            return;
         }
-        if (newBoard) {
-            setScore(newBoard.flatMap(e => e).reduce((sum, cur) => sum + (cur.cumulated ?? 0), 0))
-            newBoard = boardService.generateTile(newBoard);
-            setBoard(newBoard as TileDto[][]);
-            testEndService.testEndGame(newBoard as TileDto[][]);
-        }
+        saveNewBoard();
     }, [board, touchStart, touchEnd]);
 
 
@@ -75,41 +71,59 @@ export function useGame() {
     };
 
     const handleKeyDown = useCallback((event: any) => {
-        let newBoard: TileDto[][];
         switch (event.code) {
             case 'ArrowLeft':
-                newBoard = tileService.slideLeft(board);
+                tileService.slideTo(TurnDto.LEFT);
                 break;
             case 'ArrowRight':
-                newBoard = tileService.slideRight(board);
+                tileService.slideTo(TurnDto.RIGHT);
                 break;
             case 'ArrowUp':
-                newBoard = tileService.slideUp(board);
+                tileService.slideTo(TurnDto.UP);
                 break;
             case 'ArrowDown':
-                newBoard = tileService.slideDown(board);
+                tileService.slideTo(TurnDto.DOWN);
                 break;
             default:
                 return;
         }
-        setScore(newBoard.flatMap(e => e).reduce((sum, cur) => sum + (cur.cumulated ?? 0), 0))
-        newBoard = boardService.generateTile(newBoard);
-        console.log(newBoard.flatMap(e => e));
-        setBoard(newBoard);
-        testEndService.testEndGame(newBoard);
+        saveNewBoard();
     }, [board]);
+
+    const saveNewBoard = () => {
+        setScore(boardService.getScore())
+        setBoard(boardService.getCopyBoard());
+        generateTileAndRemoveAnimation()
+        setEndGame(testEndService.testEndGame(boardService.getCopyPositionBoard()));
+    }
+
+    const generateTileAndRemoveAnimation = () => {
+        setTimeout(() => {
+            let newBoard = boardService.generateTile();
+            setBoard(newBoard);
+            setTimeout(() => {
+                boardService.removeClasses();
+                setBoard(boardService.getCopyBoard());
+            }, APPEAR_DURATION)
+        }, moveDuration())
+    }
 
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
+
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [handleKeyDown]);
+
     return {
         onTouchStart: onTouchStart,
         onTouchMove: onTouchMove,
         onTouchEnd: onTouchEnd,
         score: score,
-        board: board
+        board: board,
+        emptyBoard: boardService.fillBoard(-1),
+        isEndGame: isEndGame,
+        setGame: setGame,
     }
 }
