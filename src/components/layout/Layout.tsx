@@ -1,4 +1,7 @@
-import {ReactNode} from "react";
+import {ReactNode, useEffect} from "react";
+import {useUnit} from "effector-react";
+import {$navigation} from "../../states/store";
+import {useNavigate} from "react-router-dom";
 
 interface LayoutPros {
     children: ReactNode;

@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 import {TileDto} from "../../../dtos/game/tileDto";
-import {ANIMATION_MULTIPLIER, TILE_SIZE} from "../../../constants/game_dimension";
+import {ANIMATION_MULTIPLIER, TILE_SIZE} from "../../../constants/game";
 import {moveDuration} from "../../../utils/moveDuration";
 import {formatNumber} from "../../../utils/formatNumber";
 

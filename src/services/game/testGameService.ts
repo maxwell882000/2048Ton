@@ -2,13 +2,13 @@ import {TileService} from "./tileService";
 import {TileDto} from "../../dtos/game/tileDto";
 
 export class TestGameService {
-    private tileService: TileService;
+    private readonly tileService: TileService;
 
     constructor(tileService: TileService) {
         this.tileService = tileService;
     }
 
-    hasEmptyTile(board: TileDto[][]) {
+    private hasEmptyTile(board: TileDto[][]) {
         return board.some(row => row.some(cell => cell.value === 0));
     };
 

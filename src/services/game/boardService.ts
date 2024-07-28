@@ -1,7 +1,6 @@
-import {COLUMN, ROW, TILE_SIZE} from "../../constants/game_dimension";
-import {v4 as uuidv4} from "uuid";
+import {COLUMN, ROW, TILE_SIZE} from "../../constants/game";
 import {TileDto} from "../../dtos/game/tileDto";
-
+import {createUniqueIdGenerator} from "../../utils/createUniqueIdGenerator";
 
 export class BoardService {
     private board: TileDto[][];
@@ -36,6 +35,11 @@ export class BoardService {
         this.positionBoard = board;
     }
 
+    continueGame(board: TileDto[][], positionBoard: TileDto[][]) {
+        this.board = board;
+        this.positionBoard = positionBoard;
+    }
+
     getCopyBoard() {
         return this.board.map(row => row.map(tile => ({...tile} as TileDto)));
     }
@@ -45,12 +49,13 @@ export class BoardService {
     }
 
     fillBoard(value = 0) {
+        const incrementer = createUniqueIdGenerator();
         return Array.from({length: ROW}, (_, row) =>
             Array.from({length: COLUMN}, (_, col) => ({
                 value: value,
                 isNew: false,
                 cumulated: 0,
-                uniqueId: uuidv4(),
+                uniqueId: incrementer("b"),
                 position: {
                     left: col * TILE_SIZE,
                     top: row * TILE_SIZE
@@ -74,7 +79,7 @@ export class BoardService {
         }
     }
 
-    hasEmptyTile() {
+    private hasEmptyTile() {
         return this.board.some(row => row.some(cell => cell.value === 0));
     };
 

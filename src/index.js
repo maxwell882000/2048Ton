@@ -7,22 +7,35 @@ import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import {HomePage} from "./pages/home/HomePage";
 import GamePage from "./pages/game/GamePage";
 import App from "./App";
+import {Pages} from "./constants/pages";
+import {Start} from "./pages/start/Start";
 
 const router = createBrowserRouter([
     {
-        path: "/2048Ton",
-        element: <HomePage/>,
-    },
-    {
-        path: "/2048Ton/game",
-        element: <GamePage/>,
+        path: "/",
+        element: <App/>,
+        children: [
+            {
+                path: Pages.START,
+                element: <Start/>,
+            },
+            {
+                path: Pages.HOME,
+                element: <HomePage/>,
+            },
+            {
+                path: Pages.GAME,
+                element: <GamePage/>,
+            },
+        ]
     },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <App>
-        <RouterProvider router={router}/>
-    </App>
+    <div>
+        <RouterProvider router={router}>
+        </RouterProvider>
+    </div>
 );
 
 // If you want to start measuring performance in your app, pass a function

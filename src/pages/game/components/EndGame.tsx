@@ -5,11 +5,10 @@ import React from "react";
 import {HomeButton} from "../../../components/button/HomeButton";
 
 interface EndGameProps {
-    score: number
-    setGame: () => void
+    gameReset: () => void
 }
 
-export const EndGame = ({score, setGame}: EndGameProps) => {
+export const EndGame = ({gameReset}: EndGameProps) => {
     return (
         <>
             <div className=" relative shadow-b-container bg-white w-[11.938rem] h-[13.541rem] flex flex-col
@@ -20,10 +19,10 @@ export const EndGame = ({score, setGame}: EndGameProps) => {
                 <div className="h-[50%]"></div>
                 <div className="flex flex-col items-center justify-between h-full pb-4">
                     <div className="flex  flex-col justify-center items-center">
-                        <Score score={score} style="lg"></Score>
+                        <Score style="lg"></Score>
                     </div>
                     <div className="flex space-x-2">
-                        <PlayAgainButton onClick={setGame}></PlayAgainButton>
+                        <PlayAgainButton onClick={gameReset}></PlayAgainButton>
                         <HomeButton></HomeButton>
                     </div>
                 </div>

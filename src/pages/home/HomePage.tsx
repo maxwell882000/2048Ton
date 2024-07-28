@@ -1,17 +1,16 @@
 import {HomeContainer} from "./components/HomeContainer";
 import PlayButton from "../../components/button/PlayButton";
 import React from "react";
-import {Link} from "react-router-dom";
-import PlayAgainButton from "../../components/button/PlayAgain";
+import {useStart} from "../../hooks/useStart";
 
 export const HomePage = () => {
+    const {startGame} = useStart();
+
     return (
         <>
             <HomeContainer></HomeContainer>
             <div className="mt-6"></div>
-            <Link to="/2048Ton/game">
-                <PlayButton width={'w-lg-button'}></PlayButton>
-            </Link>
+            <PlayButton onClick={startGame} width={'w-lg-button'}></PlayButton>
         </>
     )
 }

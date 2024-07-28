@@ -1,18 +1,30 @@
 import {BoardService} from "../services/game/boardService";
 import {TileService} from "../services/game/tileService";
 import {TestGameService} from "../services/game/testGameService";
+import {BoardApi} from "../services/api/boardApi";
+import {ScoreApi} from "../services/api/scoreApi";
+import {EnergyApi} from "../services/api/energyApi";
+import {EnergyService} from "../services/game/energyService";
 
 // container.ts
 class Container {
     private static instance: Container;
     private readonly boardService: BoardService;
     private readonly tileService: TileService;
-    private testGame: TestGameService;
+    private readonly testGameService: TestGameService;
+    private readonly boardApi: BoardApi;
+    private readonly scoreApi: ScoreApi;
+    private readonly energyApi: EnergyApi;
+    private readonly energyService: EnergyService;
 
     private constructor() {
         this.boardService = new BoardService();
         this.tileService = new TileService(this.boardService);
-        this.testGame = new TestGameService(this.tileService);
+        this.testGameService = new TestGameService(this.tileService);
+        this.boardApi = new BoardApi();
+        this.scoreApi = new ScoreApi();
+        this.energyApi = new EnergyApi();
+        this.energyService = new EnergyService();
     }
 
     public static getInstance(): Container {
@@ -31,7 +43,23 @@ class Container {
     }
 
     public getTestGameService(): TestGameService {
-        return this.testGame;
+        return this.testGameService;
+    }
+
+    public getEnergyApi(): EnergyApi {
+        return this.energyApi;
+    }
+
+    public getScoreApi(): ScoreApi {
+        return this.scoreApi;
+    }
+
+    public getBoardApi(): BoardApi {
+        return this.boardApi;
+    }
+
+    public getEnergyService(): EnergyService {
+        return this.energyService;
     }
 }
 

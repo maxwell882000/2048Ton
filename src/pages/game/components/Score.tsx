@@ -1,19 +1,22 @@
 import {formatNumber} from "../../../utils/formatNumber";
 import React from "react";
+import {useUnit} from "effector-react";
+import {$score} from "../../../states/game/stores";
 
 interface ScoreProps {
-    score: number;
     style: string;
 }
 
-export const Score = ({score, style}: ScoreProps) => {
+export const Score = ({style}: ScoreProps) => {
+    const [score] = useUnit([$score]);
+
     return (
         <>
             <div><span
                 className={`
                 ${style === "sm" && "text-[1rem]"} 
                 ${style === "lg" && "text-[1.25rem]"}  
-                text-[#60CFFF]`}>SCORE</span>
+                text-[#60CFFF] uppercase`}>score</span>
             </div>
             <div className={`
                 ${style === "sm" && " w-[7.75rem] h-[1.813rem] "} 
@@ -23,7 +26,7 @@ export const Score = ({score, style}: ScoreProps) => {
                     className={`
                            ${style === "sm" && " leading-[1.813rem] "} 
                             ${style === "lg" && " leading-[2.188rem] "} 
-                    text-[1.438rem] text-[#228AED] `}>{score ? formatNumber(score) : 0}</div>
+                   text-[1.438rem] text-[#228AED] `}>{score ? formatNumber(score) : 0}</div>
             </div>
         </>
     )

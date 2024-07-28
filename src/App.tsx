@@ -1,15 +1,14 @@
 import './App.css';
 import {Layout} from "./components/layout/Layout";
-import {ReactNode} from "react";
+import {Outlet} from "react-router-dom";
+import {Routing} from "./pages/start/Routing";
 
-interface AppProps {
-    children: ReactNode;
-}
 
-function App({children}: AppProps) {
+function App() {
     return (
         <Layout>
-            {children}
+            <Routing></Routing>
+            <Outlet/>
         </Layout>
     )
 

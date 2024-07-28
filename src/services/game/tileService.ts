@@ -1,5 +1,5 @@
 import {TileDto} from "../../dtos/game/tileDto";
-import {COLUMN, ROW} from "../../constants/game_dimension";
+import {COLUMN, ROW} from "../../constants/game";
 import {v4 as uuidv4} from "uuid";
 import {TurnDto} from "../../dtos/game/turnDto";
 import {BoardService} from "./boardService";
@@ -98,7 +98,7 @@ export class TileService {
                 break;
         }
         if (newBoard) {
-            console.log(newBoard);
+            console.log(JSON.stringify(newBoard).length);
             this.updateTiles(newBoard);
             this.boardService.setPositionBoard(newBoard);
         }

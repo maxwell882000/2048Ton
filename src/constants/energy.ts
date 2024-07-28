@@ -1,0 +1,1 @@
+export const MAX_ENERGY = 24;
