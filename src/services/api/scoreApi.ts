@@ -1,13 +1,15 @@
 import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/database/telegram_storage";
-import {saveValueFirebase} from "../../infrustructure/database/firebase_db";
+import {setValueFirebase} from "../../infrustructure/database/firebase_db";
 
 interface ScoreApiDto {
     score: number;
 }
 
 export class ScoreApi {
+    TOTAL_SCORE = "/total_score"
+
     async getTotalScore(): Promise<ScoreApiDto> {
-        return (await getValueCloudStorage<ScoreApiDto>("total_score")) ?? {
+        return (await getValueCloudStorage<ScoreApiDto>(this.TOTAL_SCORE)) ?? {
             score: 0
         };
     }
@@ -15,11 +17,15 @@ export class ScoreApi {
     async setTotalScore(scoreApi: ScoreApiDto) {
         const total_score = await this.getTotalScore();
         const updated_score = {score: total_score.score + scoreApi.score};
+        console.log(`setTotalScore ${updated_score}`)
         await Promise.all([
             setValueCloudStorage<{
                 score: number
-            }>("total_score", updated_score),
-            saveValueFirebase(Telegram.WebApp.initDataUnsafe.user?.id + "/total_score", updated_score)
+            }>(this.TOTAL_SCORE, updated_score),
+            setValueFirebase(
+                Telegram.WebApp.initDataUnsafe.user?.id.toString() as string + this.TOTAL_SCORE,
+                updated_score.score
+            )
         ])
         return updated_score.score;
     }

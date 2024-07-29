@@ -1,0 +1,1 @@
+export const IS_LOCAL = Boolean(process.env.LOCAL ?? false);

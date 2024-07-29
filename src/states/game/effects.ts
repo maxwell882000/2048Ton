@@ -30,11 +30,14 @@ export const setBoardApiFx = gameDomain.createEffect(async () => {
 });
 
 export const setEndGameActionsFx = gameDomain.createEffect(async () => {
+    console.log("setEndGameActionsFx how many times")
     try {
-        await boardApi.removeBoards();
-        await scoreApi.setTotalScore({
-            score: boardService.getScore()
-        });
+        await Promise.all([
+            boardApi.removeBoards(),
+            scoreApi.setTotalScore({
+                score: boardService.getScore()
+            })
+        ]);
     } catch (e) {
         console.log("setEndGameActionsFx error", e)
     }
@@ -52,7 +55,7 @@ export const removeAnimationsFx = gameDomain.createEffect(() => {
 })
 
 export const setBoardFx = gameDomain.createEffect(() => {
-    $isGameEndChanged(testEndService.testEndGame(boardService.getCopyPositionBoard()) || true);
+    $isGameEndChanged(testEndService.testEndGame(boardService.getCopyPositionBoard()));
     $scoreChanged(boardService.getScore())
     $boardChanged(boardService.getCopyBoard());
 })
