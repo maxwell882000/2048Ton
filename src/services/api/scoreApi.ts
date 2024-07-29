@@ -6,7 +6,7 @@ interface ScoreApiDto {
 }
 
 export class ScoreApi {
-    TOTAL_SCORE = "/total_score"
+    TOTAL_SCORE = "total_score"
 
     async getTotalScore(): Promise<ScoreApiDto> {
         return (await getValueCloudStorage<ScoreApiDto>(this.TOTAL_SCORE)) ?? {
@@ -23,7 +23,7 @@ export class ScoreApi {
                 score: number
             }>(this.TOTAL_SCORE, updated_score),
             setValueFirebase(
-                Telegram.WebApp.initDataUnsafe.user?.id.toString() as string + this.TOTAL_SCORE,
+                Telegram.WebApp.initDataUnsafe.user?.id.toString() as string + "/" + this.TOTAL_SCORE,
                 updated_score.score
             )
         ])
