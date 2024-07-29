@@ -4,6 +4,7 @@ import {$boardChanged, $isGameEndChanged, $scoreChanged} from "./events";
 import {boardApiFactory} from "../../factory/game/boardApiFactory";
 import {tileDtoFactory} from "../../factory/game/tileDtoFactory";
 import {$isEndGame} from "./stores";
+import {$totalScoreChanged} from "../home/events";
 
 const boardService = Container.getBoardService();
 const testEndService = Container.getTestGameService();
@@ -32,12 +33,13 @@ export const setBoardApiFx = gameDomain.createEffect(async () => {
 export const setEndGameActionsFx = gameDomain.createEffect(async () => {
     console.log("setEndGameActionsFx how many times")
     try {
-        await Promise.all([
+        const [_, score] = await Promise.all([
             boardApi.removeBoards(),
             scoreApi.setTotalScore({
                 score: boardService.getScore()
             })
         ]);
+        $totalScoreChanged(score)
     } catch (e) {
         console.log("setEndGameActionsFx error", e)
     }

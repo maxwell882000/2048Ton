@@ -9,6 +9,7 @@ import GamePage from "./pages/game/GamePage";
 import App from "./App";
 import {Pages} from "./constants/pages";
 import {Start} from "./pages/start/Start";
+import {OutEnergy} from "./pages/outenergy/OutEnergy";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: Pages.GAME,
                 element: <GamePage/>,
+            },
+            {
+                path: Pages.OUTENERGY,
+                element: <OutEnergy/>,
             },
         ]
     },

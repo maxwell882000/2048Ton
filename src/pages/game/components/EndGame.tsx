@@ -21,9 +21,9 @@ export const EndGame = ({gameReset}: EndGameProps) => {
                     <div className="flex  flex-col justify-center items-center">
                         <Score style="lg"></Score>
                     </div>
-                    <div className="flex space-x-2">
-                        <PlayAgainButton onClick={gameReset}></PlayAgainButton>
+                    <div className={`flex space-x-2 `}>
                         <HomeButton></HomeButton>
+                        <PlayAgainButton onClick={gameReset}></PlayAgainButton>
                     </div>
                 </div>
             </div>

@@ -1,15 +1,13 @@
 import {homeDomain} from "./domain";
-import {$energyChanged, $totalScoreChanged, $totalScoreIncreased} from "./events";
+import {$energyChanged, $totalScoreChanged} from "./events";
 import {EnergyDto} from "../../dtos/home/energyDto";
 import moment from "moment";
 import {sample} from "effector";
 import {delay} from "patronum";
 import {getEnergyFx, resetEnergyFx} from "./effects";
-import {$isGameEndChanged, $scoreChanged} from "../game/events";
 
 export const $totalScore = homeDomain.createStore<number>(0)
-    .on($totalScoreChanged, (_, result) => result)
-    .on($totalScoreIncreased, (state, result) => state + result);
+    .on($totalScoreChanged, (_, result) => result);
 
 export const $energy = homeDomain.createStore<EnergyDto>({
     energy: 0,
@@ -26,14 +24,5 @@ sample(
                 result.resetDate.diff(moment(), 'milliseconds')),
         target: resetEnergyFx
     }
-)
-
-sample({
-    clock: $isGameEndChanged,
-    source: $scoreChanged,
-    filter: (score, isEndGame) => isEndGame,
-    fn: (score) => score,
-    target: $totalScoreIncreased
-})
-
+);
 

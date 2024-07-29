@@ -25,11 +25,12 @@ export const loadGameDataFx = app.createEffect(async () => {
 
 export const startGameFx = gameDomain.createEffect(async () => {
     const energy = $energy.getState();
-    console.log("startGameFx MADED ", energy)
     if (energy.energy >= 1) {
         $pageChanged(Pages.GAME)
-        await reduceEnergyFx()
+        await reduceEnergyFx();
+        return true;
     } else {
         $pageChanged(Pages.OUTENERGY)
     }
+    return false;
 });

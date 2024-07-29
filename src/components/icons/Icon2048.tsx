@@ -16,8 +16,8 @@ export const Icon2048 = ({className}: Icon2048Props) => {
                 </g>
                 <defs>
                     <filter id="filter0_d_1_6" x="0.23999" y="8.008" width="228.333" height="59.44"
-                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                            filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
                                        result="hardAlpha"/>
                         <feOffset dy="6"/>
@@ -30,8 +30,8 @@ export const Icon2048 = ({className}: Icon2048Props) => {
                     </filter>
                     <linearGradient id="paint0_linear_1_6" x1="114.5" y1="5" x2="114.5" y2="65"
                                     gradientUnits="userSpaceOnUse">
-                        <stop offset="0.2" stop-color="#E88C03"/>
-                        <stop offset="1" stop-color="#FFBE2D"/>
+                        <stop offset="0.2" stopColor="#E88C03"/>
+                        <stop offset="1" stopColor="#FFBE2D"/>
                     </linearGradient>
                 </defs>
             </svg>

@@ -16,15 +16,14 @@ const GamePage = () => {
             <GameGate></GameGate>
             <div>
                 <div
-                    onTouchStart={onTouchStart}
-                    onTouchMove={onTouchMove}
-                    onTouchEnd={onTouchEnd}
-                    className={`absolute top-0 left-0 h-screen w-screen flex z-10 justify-center items-center  transition-opacity duration-1000  ${isEndGame ? 'opacity-100' : 'opacity-0'}`}>
+                    className={`absolute top-0 left-0 h-screen w-screen flex  justify-center items-center  transition-opacity duration-1000  ${isEndGame ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                     <EndGame gameReset={gameReset}></EndGame>
                 </div>
                 <div
-                    className={`absolute top-0 left-0 h-screen w-screen transition-opacity duration-1000 flex justify-center items-center  ${!isEndGame ? 'opacity-100' : 'opacity-0'}`}>
-
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                    className={`absolute top-0 left-0 h-screen w-screen transition-opacity duration-1000 flex justify-center items-center  ${!isEndGame ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                     <div className="flex flex-col justify-center items-center space-y-4">
 
                         <Icon2048></Icon2048>

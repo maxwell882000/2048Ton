@@ -20,5 +20,11 @@ sample({
 
 sample({
     source: $gameStarted,
-    target: [startGameFx, resetGameFx]
+    target: [startGameFx]
 });
+
+sample({
+    source: startGameFx.doneData,
+    filter: (isNewGame) => isNewGame,
+    target: [resetGameFx]
+})

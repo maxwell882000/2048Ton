@@ -39,7 +39,9 @@ sample({
 })
 
 sample({
-    source: delay(setBoardFx.doneData, moveDuration()),
+    clock: delay(setBoardFx.doneData, moveDuration()),
+    source: $isEndGame,
+    filter: (isEndGame) => !isEndGame,
     target: generateTileFx,
 })
 
