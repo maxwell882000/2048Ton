@@ -5,6 +5,15 @@ import {$energy} from "./home/stores";
 import {Pages} from "../constants/pages";
 import {getEnergyFx, getScoreFx, reduceEnergyFx} from "./home/effects";
 import {continueGameOnStartFx} from "./game/effects";
+import Container from "../containers/container";
+
+// referral process
+// -- generate link user id will be in this link
+// -- get the link from user who came from the link
+const initApi = Container.getInitApi();
+export const initGameFx = app.createEffect(async () => {
+    await initApi.syncUserData();
+})
 
 // make variable to test locally or in prod
 // make it impossible to save total result more than once in the game

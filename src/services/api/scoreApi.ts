@@ -1,5 +1,6 @@
-import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/database/telegram_storage";
-import {setValueFirestore} from "../../infrustructure/database/firestore";
+import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/telegram/telegram_storage";
+import {setValueFirestore} from "../../infrustructure/firebase/firestore";
+import {getTelegramUser} from "../../infrustructure/telegram/telegram_user";
 
 interface ScoreApiDto {
     score: number;
@@ -23,7 +24,7 @@ export class ScoreApi {
                 score: number
             }>(this.TOTAL_SCORE, updated_score),
             setValueFirestore(
-                Telegram.WebApp.initDataUnsafe.user?.id.toString() as string || '0',
+                getTelegramUser()?.id.toString() || '0',
                 {s: updated_score.score}
             )
         ])

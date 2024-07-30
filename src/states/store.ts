@@ -3,7 +3,7 @@ import {Pages} from "../constants/pages";
 import {$gameStarted, $pageChanged} from "./events";
 import {sample} from "effector";
 import {AppStartGate} from "./gate";
-import {loadGameDataFx, startGameFx} from "./effects";
+import {initGameFx, loadGameDataFx, startGameFx} from "./effects";
 import {resetGameFx} from "./game/effects";
 
 export const $navigation = app.createStore<Pages>(Pages.START)
@@ -14,7 +14,7 @@ export const $navigation = app.createStore<Pages>(Pages.START)
 
 sample({
     source: AppStartGate.open,
-    target: loadGameDataFx
+    target: [initGameFx, loadGameDataFx]
 });
 
 

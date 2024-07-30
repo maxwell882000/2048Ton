@@ -1,10 +1,10 @@
-import firebaseApp from "../firebase/firebase";
+import firebaseApp from "./firebase";
 import {child, Database, get, getDatabase, ref, set} from "firebase/database";
 
 const firebaseDb: Database = getDatabase(firebaseApp)
 
 
-export async function setValueFirebase<T>(key: string, value: T) {
+ async function setValueFirebase<T>(key: string, value: T) {
     await set(child(ref(firebaseDb, "users"), key), value);
 }
 

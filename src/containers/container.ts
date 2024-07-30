@@ -5,6 +5,7 @@ import {BoardApi} from "../services/api/boardApi";
 import {ScoreApi} from "../services/api/scoreApi";
 import {EnergyApi} from "../services/api/energyApi";
 import {EnergyService} from "../services/game/energyService";
+import {InitApi} from "../services/api/initApi";
 
 // container.ts
 class Container {
@@ -16,6 +17,7 @@ class Container {
     private readonly scoreApi: ScoreApi;
     private readonly energyApi: EnergyApi;
     private readonly energyService: EnergyService;
+    private initApi: InitApi;
 
     private constructor() {
         this.boardService = new BoardService();
@@ -25,6 +27,7 @@ class Container {
         this.scoreApi = new ScoreApi();
         this.energyApi = new EnergyApi();
         this.energyService = new EnergyService();
+        this.initApi = new InitApi();
     }
 
     public static getInstance(): Container {
@@ -60,6 +63,10 @@ class Container {
 
     public getEnergyService(): EnergyService {
         return this.energyService;
+    }
+
+    public getInitApi(): InitApi {
+        return this.initApi;
     }
 }
 

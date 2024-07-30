@@ -1,4 +1,4 @@
-import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/database/telegram_storage";
+import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/telegram/telegram_storage";
 import {MAX_ENERGY} from "../../constants/energy";
 
 

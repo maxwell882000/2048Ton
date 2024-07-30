@@ -1,4 +1,4 @@
-import firebaseApp from "../firebase/firebase";
+import firebaseApp from "./firebase";
 import {collection, doc, getFirestore, setDoc} from "firebase/firestore";
 import {Firestore, getDocs} from "@firebase/firestore";
 

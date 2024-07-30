@@ -10,7 +10,6 @@ import App from "./App";
 import {Pages} from "./constants/pages";
 import {Start} from "./pages/start/Start";
 import {OutEnergy} from "./pages/outenergy/OutEnergy";
-import {TonConnectUIProvider} from "@tonconnect/ui-react";
 
 const router = createBrowserRouter([
     {
@@ -39,10 +38,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <div>
-        <TonConnectUIProvider manifestUrl="https://maxwell882000.github.io/2048Ton/tonconnect-manifest.json">
-            <RouterProvider router={router}>
-            </RouterProvider>
-        </TonConnectUIProvider>
+        {/*<TonConnectUIProvider manifestUrl="https://maxwell882000.github.io/2048Ton/tonconnect-manifest.json">*/}
+        <RouterProvider router={router}>
+        </RouterProvider>
+        {/*</TonConnectUIProvider>*/}
     </div>
 );
 
