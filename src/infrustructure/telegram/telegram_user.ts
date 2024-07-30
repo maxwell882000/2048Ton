@@ -1,4 +1,4 @@
-interface WebAppUser {
+export interface WebAppUser {
     /**
      * A unique identifier for the user or bot. This number may have more than 32
      * significant bits and some programming languages may have difficulty/silent defects
