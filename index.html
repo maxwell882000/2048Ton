@@ -1,16 +1,29 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2048</title>
-    <link rel="stylesheet" href="2048.css">
-    <script src="2048.js"></script>
+    <title>Embedded JSON Example</title>
+    <script id="json-data" type="application/json">
+        {
+            "message": "Hello, world!",
+            "timestamp": "2024-07-30T00:00:00Z"
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get the JSON data from the script tag
+            const jsonData = document.getElementById('json-data').textContent;
+
+            // Parse the JSON data
+            const data = JSON.parse(jsonData);
+
+            // Display the JSON data
+            document.getElementById('data').textContent = JSON.stringify(data, null, 2);
+        });
+    </script>
 </head>
 <body>
-<h1 style="color:blue; font-size: 50px" id="main">2048 2</h1>
-<hr>
-<h2>Score: <span id="score">0</span></h2>
-
-<div id="board"></div>
+<pre id="data">Loading...</pre>
 </body>
 </html>

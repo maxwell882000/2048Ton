@@ -8,14 +8,21 @@
 :root {
     --color-board: #FFFF;
     --color-board-border: #bbada0;
-    --color-tile-border: #bbada0
+    --color-tile-border: #bbada0;
+    --top-height: 13.541
+}
+
+.h-out {
+    height: calc(var(--top-height) * 1rem);
+}
+
+.top-out {
+    top: calc((var(--top-height) * -1 / 2 + 1) * 1rem);
 }
 
 .shadow-b-container {
     box-shadow: 0 0.25rem 0 rgba(0, 0, 0, 0.25), 0 -0.25rem 0 #D1D8FF inset
 }
-
-
 
 
 .tile {
