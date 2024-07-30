@@ -32,7 +32,8 @@ import {APPEAR_DURATION, RESET_GAME_DURATION, SYNC_GAME} from "../../constants/g
 // Parse html to get referrals
 // Reads for checking leaderboards every hour, and then upload to repo
 // Parse html to get leaderboards
-// calculate thoughrolly
+// calculate it
+//
 
 export const $board = gameDomain.createStore<TileDto[][]>([])
     .on($boardChanged, (_, result) => result)

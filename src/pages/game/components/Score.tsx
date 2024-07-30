@@ -26,7 +26,7 @@ export const Score = ({style}: ScoreProps) => {
                     className={`
                            ${style === "sm" && " leading-[1.813rem] "} 
                             ${style === "lg" && " leading-[2.188rem] "} 
-                   text-[1.438rem] text-[#228AED] `}>{score ? formatNumber(score) : 0}</div>
+                   text-[2rem] text-[#228AED] `}>{score ? formatNumber(score) : 0}</div>
             </div>
         </>
     )

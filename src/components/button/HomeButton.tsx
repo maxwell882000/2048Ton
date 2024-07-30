@@ -5,14 +5,21 @@ import {useUnit} from "effector-react";
 import {$pageChanged} from "../../states/events";
 import {Pages} from "../../constants/pages";
 
+interface HomeButtonProps {
+    width?: string
+    children?: React.ReactNode;
+}
 
-export const HomeButton = () => {
+export const HomeButton = ({children, width = "w-[2.5em]"}: HomeButtonProps) => {
     const [pageChanged] = useUnit([$pageChanged]);
-    return <Button onClick={() => pageChanged(Pages.HOME)} width={"w-[2.5em]"} height={"h-[2.5em]"}
+    return <Button onClick={() => pageChanged(Pages.HOME)} width={width} height={"h-[2.5em]"}
                    fontSize={"text-[1rem]"}
                    color={"#FFDB0A"}
                    shadow={"shadow-b-button-orange"}>
-        <div className="flex flex-row justify-center items-center"><HomeIcon></HomeIcon></div>
+        <div className="flex flex-row justify-center uppercase items-center space-x-1">
+            <HomeIcon></HomeIcon>
+            {children}
+        </div>
     </Button>
 
 }

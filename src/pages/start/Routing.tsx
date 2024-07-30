@@ -7,7 +7,6 @@ export const Routing = () => {
     const [navigation] = useUnit([$navigation])
     const navigate = useNavigate();
     useEffect(() => {
-        console.log(`NAVIGATION IS MADEDED ${navigation}`);
         navigate(navigation)
     }, [navigation])
     return <></>
