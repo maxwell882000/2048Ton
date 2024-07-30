@@ -10,7 +10,7 @@ export class InitApi {
         if (user && user.id && !isInit) {
             console.log("STARTED  TO VALUE FIRESTORE 1!!!")
             await setValueFirestore(
-                user.id.toString() || '0',
+                user.id.toString(),
                 {
                     un: user.first_name + " " + user.last_name,
                     l: user.photo_url,
