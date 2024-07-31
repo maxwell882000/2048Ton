@@ -35,8 +35,8 @@ interface User {
 
 const USER_STORAGE_KEY = 'user'
 
-export class InitApi {
-    private user: User;
+export class UserApi {
+    private readonly user: User;
 
     constructor() {
         this.user = this.buildUser();

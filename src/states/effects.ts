@@ -53,7 +53,7 @@ import {$totalScoreChanged} from "./home/events";
 // leaderboard
 // see the top 100 people who gained more score
 //
-const initApi = Container.getInitApi();
+const initApi = Container.getUserApi();
 const scoreApi = Container.getScoreApi();
 export const initGameFx = app.createEffect(async () => {
     const user = await initApi.sync();
