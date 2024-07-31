@@ -1,18 +1,14 @@
 function sad() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            reject("1241242114")
-            // resolve("Asdsadsadasdsaads")
-        }, 300)
-    })
+    const requestOptions = {
+        method: "GET",
+        redirect: "follow"
+    };
+
+    fetch("https://maxwell882000.github.io/2048Ton/tonconnect-manifest.json", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 
-async function asd() {
-    try {
-        await sad();
-    } catch (e) {
-        console.log(e)
-    }
-}
 
-asd()
+sad()

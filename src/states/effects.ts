@@ -7,9 +7,51 @@ import {getEnergyFx, getScoreFx, reduceEnergyFx} from "./home/effects";
 import {continueGameOnStartFx} from "./game/effects";
 import Container from "../containers/container";
 
+// new columns created_at (ct)
+// new referral_type (rt)
+
 // referral process
 // -- generate link user id will be in this link
-// -- get the link from user who came from the link
+// -- get userid from link when referral open the app
+// -- instantly give him coins
+// -- save that he is referral with referrer id
+
+// firestore
+// -- add indexes on "referral_type" (type  ('NO', 'REFERRAL', 'ACTIVATED_REFERRAL'))  column
+//    save created_account date to filter referrals
+//    so if referrer will not enter the game during x days
+//    his referrals will be lost after x days
+
+
+
+// referrals job use github actions
+// -- get from firestore data about referrals
+// -- rewrite file index.json
+// -- push data to specified repository
+// -- loader should be in .gitignore
+// -- fetching operation works: get all referral_type (REFERRAL) and created_at by x days
+
+
+//
+// referrer process
+// get generated file
+// check if referrals with him exists
+// remove referrals existing in cloud storage
+// add to cloud storage this referral
+// remove from firestore
+//
+// to decrease load on github for checking
+
+// referrals page
+// see all referrals from cloud storage
+// add coins from referrals , make then referral unclickable
+
+// ===========================================================
+
+
+// leaderboard
+// see the top 100 people who gained more score
+//
 const initApi = Container.getInitApi();
 export const initGameFx = app.createEffect(async () => {
     await initApi.syncUserData();

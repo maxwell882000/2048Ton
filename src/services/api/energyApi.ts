@@ -14,7 +14,7 @@ export class EnergyApi {
     async getEnergy(): Promise<EnergyApiDto> {
         const result = (await getValueCloudStorage("energy")) as EnergyApiDto;
         return {
-            energy: 0 ?? MAX_ENERGY,
+            energy: result?.energy ?? MAX_ENERGY,
             maxEnergy: result?.maxEnergy ?? MAX_ENERGY,
             resetDate: result?.resetDate ?? new Date(),
         } as EnergyApiDto
