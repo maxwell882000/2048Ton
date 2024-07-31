@@ -2,6 +2,7 @@ import {getTelegramId, getTelegramUser} from "../../infrustructure/telegram/tele
 import {setValueFirestore} from "../../infrustructure/firebase/firestore";
 import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/telegram/telegram_storage";
 import {getTelegramParams} from "../../infrustructure/telegram/telegram_params";
+import {REFERRAL_REWARD} from "../../constants/game";
 
 enum ReferrerStatus {
     NO_REFERRER,
@@ -28,7 +29,8 @@ interface User {
     rt?: ReferrerStatus,
     ri?: number,
     un: string,
-    p?: string
+    p?: string,
+    s?: number
 }
 
 const USER_STORAGE_KEY = 'user'
@@ -49,7 +51,8 @@ export class InitApi {
             ct: new Date(),
             ut: new Date(),
             rt: 'ref' in params && params['ref'] ? ReferrerStatus.HAS_REFERRER : ReferrerStatus.NO_REFERRER,
-            ri: 'ref' in params && params['ref'] ? Number(params['ref']) : ""
+            ri: 'ref' in params && params['ref'] ? Number(params['ref']) : "",
+            s: 'ref' in params && params['ref'] ? REFERRAL_REWARD : 0,
         } as User;
     }
 
