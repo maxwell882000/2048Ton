@@ -18,7 +18,6 @@ export class ScoreApi {
     async setTotalScore(scoreApi: ScoreApiDto) {
         const total_score = await this.getTotalScore();
         const updated_score = {score: total_score.score + scoreApi.score};
-        console.log(`setTotalScore ${updated_score}`)
         await Promise.all([
             setValueCloudStorage<{
                 score: number

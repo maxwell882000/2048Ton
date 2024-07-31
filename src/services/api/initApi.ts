@@ -67,9 +67,11 @@ export class InitApi {
                         await this.setUser(userId.toString())
                     }
                 } else {
-                    await this.setUser(userId.toString())
+                    await this.setUser(userId.toString());
+                    return this.user;
                 }
             }
+
         } catch (e) {
             console.log(e)
         }
@@ -82,6 +84,7 @@ export class InitApi {
         delete this.user['ri'];
         // do not send created_at if user was already created
         delete this.user['ct'];
+        delete this.user['s'];
     }
 
     private async setUser(userId: string) {

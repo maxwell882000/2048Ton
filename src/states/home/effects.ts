@@ -29,7 +29,6 @@ export const getEnergyFx = homeDomain.createEffect(async (): Promise<EnergyDto> 
 
 export const getScoreFx = homeDomain.createEffect(async () => {
     const score = await scoreApi.getTotalScore();
-    console.log("getScoreFx", score);
     $totalScoreChanged(score?.score);
 });
 

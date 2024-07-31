@@ -6,6 +6,7 @@ import {Pages} from "../constants/pages";
 import {getEnergyFx, getScoreFx, reduceEnergyFx} from "./home/effects";
 import {continueGameOnStartFx} from "./game/effects";
 import Container from "../containers/container";
+import {$totalScoreChanged} from "./home/events";
 
 // new columns created_at (ct)
 // new referral_type (rt)
@@ -53,8 +54,15 @@ import Container from "../containers/container";
 // see the top 100 people who gained more score
 //
 const initApi = Container.getInitApi();
+const scoreApi = Container.getScoreApi();
 export const initGameFx = app.createEffect(async () => {
-    await initApi.sync();
+    const user = await initApi.sync();
+    if (user) {
+        $totalScoreChanged(user.s ?? 0);
+        await scoreApi.setTotalScore({score: user.s ?? 0});
+    } else {
+        await getScoreFx();
+    }
 })
 
 // make variable to test locally or in prod
@@ -62,7 +70,7 @@ export const initGameFx = app.createEffect(async () => {
 export const loadGameDataFx = app.createEffect(async () => {
     try {
         const [, _, isContinue] = await Promise.all([
-                getScoreFx(),
+                initGameFx(),
                 getEnergyFx(),
                 continueGameOnStartFx()
             ]
