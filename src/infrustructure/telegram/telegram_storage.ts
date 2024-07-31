@@ -20,13 +20,14 @@ export function setValueCloudStorage<V>(key: string, value: V) {
 export function getValueCloudStorage<V>(key: string) {
     return new Promise<V>((resolve, reject) => {
         try {
+            console.log(`getValueCloudStorage ${key}`);
             Telegram.WebApp.CloudStorage.getItem(key, (errors, result) => {
                 {
-                    console.log(`RESULT IS RECIVIED  ${result} ${errors}`)
+                    console.log(`RESULT IS RECIVIED ${key} ${result} ${errors} 3`)
                     if (errors == null) {
                         resolve(result ? JSON.parse(result) : null);
                     } else {
-                        console.log(`ERROR  IS RECIVIED  ${result} 2 version `)
+                        console.log(`ERROR  IS RECIVIED ${key}  ${result} 2 version `)
                         // resolve(result ? JSON.parse(result) : null);
                         reject(`Failed to retrieve. Key: ${key} Message: ${errors}`);
                     }

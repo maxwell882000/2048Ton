@@ -49,3 +49,7 @@ export interface WebAppUser {
 export function getTelegramUser(): WebAppUser | undefined {
     return Telegram.WebApp.initDataUnsafe.user;
 }
+
+export function getTelegramId(): number | undefined {
+    return getTelegramUser()?.id;
+}

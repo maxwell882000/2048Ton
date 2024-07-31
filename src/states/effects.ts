@@ -9,6 +9,7 @@ import Container from "../containers/container";
 
 // new columns created_at (ct)
 // new referral_type (rt)
+// new referrer_id (ri)
 
 // referral process
 // -- generate link user id will be in this link
@@ -21,7 +22,6 @@ import Container from "../containers/container";
 //    save created_account date to filter referrals
 //    so if referrer will not enter the game during x days
 //    his referrals will be lost after x days
-
 
 
 // referrals job use github actions
@@ -54,7 +54,7 @@ import Container from "../containers/container";
 //
 const initApi = Container.getInitApi();
 export const initGameFx = app.createEffect(async () => {
-    await initApi.syncUserData();
+    await initApi.sync();
 })
 
 // make variable to test locally or in prod

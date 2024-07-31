@@ -11,3 +11,5 @@ const firebaseDb: Database = getDatabase(firebaseApp)
 export async function getValueFirebase<T>(key: string) {
     return await get(ref(firebaseDb, key));
 }
+
+
