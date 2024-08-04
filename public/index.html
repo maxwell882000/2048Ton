@@ -28,8 +28,6 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
-    <script>
-    </script>
 </head>
 <style>
     /*body {*/
@@ -52,7 +50,7 @@
 </body>
 
 <script>
-    Telegram.WebApp.expand()
+    Telegram.WebApp.expand();
 
     function hasParentWithClass(elem, className) {
         try {
@@ -82,12 +80,6 @@
         if (!hasParentWithClass(e.target, 'scroll-element'))
             e.preventDefault()
     }, {passive: false});
-
-    window.addEventListener("wheel", (e) => {
-        if (!hasParentWithClass(e.target, 'scroll-element'))
-            e.preventDefault()
-    }, {passive: false});
-    // window.scrollTo(0, 100);
     window.Telegram.WebApp.enableClosingConfirmation();
     Telegram.WebApp.ready()
 </script>

@@ -36,7 +36,7 @@ export const ReferralPage = () => {
 
         </div>
         <div
-            className={`check-tab flex-1 scroll-element overflow-y-scroll pb-2 space-y-3`}
+            className={`check-tab flex-1 ${referrals.length && 'scroll-element'}  overflow-y-scroll pb-2 space-y-3`}
         >
             {referrals.length ? referrals
                     .map((referral, index) =>

@@ -46,7 +46,7 @@ export class ReferralApi {
         const result = await getValueCloudStorage<ReferralApiCloudStorageDto>(referralMethod);
         return {
             referrals: result?.referrals ?? {},
-            expiry: result?.expiry ?? new Date(0, 0, 0),
+            expiry: new Date(result?.expiry ?? new Date(0, 0, 0).toString()),
         }
     }
 }

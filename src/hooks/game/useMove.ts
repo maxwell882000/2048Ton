@@ -81,6 +81,12 @@ export function useMove() {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [handleKeyDown]);
+    useEffect(() => {
+        window.scrollTo(0, 3);
+        return () => {
+            window.scrollTo(0, 0);
+        }
+    })
 
     return {
         onTouchStart: onTouchStart,

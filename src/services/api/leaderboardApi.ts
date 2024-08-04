@@ -31,7 +31,7 @@ export class LeaderboardApi {
         const result = await getValueCloudStorage<LeaderboardApiCloudStorageDto>(leaderboardMethod);
         return {
             leaderboard: result?.leaderboard ?? [],
-            expiry: result?.expiry ?? new Date(0, 0, 0),
+            expiry: new Date(result?.expiry ?? (new Date(0, 0, 0)).toString()),
         }
     }
 }
