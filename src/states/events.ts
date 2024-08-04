@@ -1,7 +1,7 @@
 import {app} from "./domain";
-import {Pages} from "../constants/pages";
+import {Nav} from "../constants/pages";
 
 
-export const $pageChanged = app.createEvent<Pages>();
+export const $pageChanged = app.createEvent<Nav>();
 
 export const $gameStarted = app.createEvent();

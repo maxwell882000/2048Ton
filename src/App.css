@@ -5,6 +5,44 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Hop';
+    src: url("asset/hop.otf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    -webkit-overflow-scrolling: touch;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+/* Hide scrollbars in WebKit-based browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar */
+}
+
+/* Hide scrollbars in Firefox */
+html {
+    scrollbar-width: none; /* Hide scrollbar */
+}
+
 :root {
     --color-board: #FFFF;
     --color-board-border: #bbada0;
@@ -22,6 +60,10 @@
 
 .shadow-b-container {
     box-shadow: 0 0.25rem 0 rgba(0, 0, 0, 0.25), 0 -0.25rem 0 #D1D8FF inset
+}
+
+.shadow-b-container-orange {
+    box-shadow: 0 0.25rem 0 #EF8521
 }
 
 

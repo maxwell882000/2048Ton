@@ -3,15 +3,8 @@ import {setValueFirestore} from "../../infrustructure/firebase/firestore";
 import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/telegram/telegram_storage";
 import {getTelegramParams} from "../../infrustructure/telegram/telegram_params";
 import {REFERRAL_REWARD} from "../../constants/game";
+import {ReferrerStatus, UserApiDto} from "../../dtos/api/userApiDto";
 
-enum ReferrerStatus {
-    NO_REFERRER,
-    HAS_REFERRER
-}
-
-interface Referrer {
-    referrerStatus?: ReferrerStatus
-}
 
 // User
 // created_at        []     (ct)
@@ -23,26 +16,11 @@ interface Referrer {
 // photo_url         []     (p)
 
 
-interface User {
-    ct?: Date,
-    ut: Date,
-    rt?: ReferrerStatus,
-    ri?: number,
-    un: string,
-    p?: string,
-    s?: number
-}
-
 const USER_STORAGE_KEY = 'user'
 
 export class UserApi {
-    private readonly user: User;
 
-    constructor() {
-        this.user = this.buildUser();
-    }
-
-    private buildUser(): User {
+    private buildUser(): UserApiDto {
         const user = getTelegramUser();
         const params = getTelegramParams();
         return {
@@ -53,49 +31,56 @@ export class UserApi {
             rt: 'ref' in params && params['ref'] ? ReferrerStatus.HAS_REFERRER : ReferrerStatus.NO_REFERRER,
             ri: 'ref' in params && params['ref'] ? Number(params['ref']) : "",
             s: 'ref' in params && params['ref'] ? REFERRAL_REWARD : 0,
-        } as User;
+        } as UserApiDto;
     }
 
     async sync() {
         try {
+            const user = this.buildUser();
             const userId = getTelegramId();
             if (userId) {
-                const storageUser = await getValueCloudStorage<User>(USER_STORAGE_KEY);
+                const storageUser = await getValueCloudStorage<UserApiDto>(USER_STORAGE_KEY);
                 if (storageUser != null) {
-                    this.deleteConstantFields();
-                    if (this.userDataChanged(this.user, storageUser)) {
-                        await this.setUser(userId.toString())
+                    this.deleteConstantFields(user);
+                    if (this.userDataChanged(user, storageUser)) {
+                        await this.setUser(userId.toString(), user);
                     }
                 } else {
-                    await this.setUser(userId.toString());
-                    return this.user;
+                    await this.setUser(userId.toString(), user);
+                    return user;
                 }
             }
 
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
-
     }
 
-    private deleteConstantFields() {
+    async updateScore(score: number) {
+        const id = getTelegramId();
+        await setValueFirestore(id?.toString() ?? '0', {
+            's': score
+        });
+    }
+
+    private deleteConstantFields(user: UserApiDto) {
         // do not send referral information if the user was already created
-        delete this.user['rt'];
-        delete this.user['ri'];
+        delete user['rt'];
+        delete user['ri'];
         // do not send created_at if user was already created
-        delete this.user['ct'];
-        delete this.user['s'];
+        delete user['ct'];
+        delete user['s'];
     }
 
-    private async setUser(userId: string) {
-        console.log("setUser", this.user);
-        await setValueFirestore(userId.toString(), this.user);
-        await setValueCloudStorage(USER_STORAGE_KEY, this.user);
+    private async setUser(userId: string, user: UserApiDto) {
+        await setValueFirestore(userId.toString(), user);
+        await setValueCloudStorage(USER_STORAGE_KEY, user);
     }
 
-    private userDataChanged(newUser: User, oldUser: User) {
+    private userDataChanged(newUser: UserApiDto, oldUser: UserApiDto) {
         return !(newUser.un === oldUser?.un &&
             newUser.p === oldUser?.p);
-
     }
+
+
 }

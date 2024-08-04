@@ -1,8 +1,14 @@
 import {gameDomain} from "./domain";
 import {TileDto} from "../../dtos/game/tileDto";
-import {$boardChanged, $isGameEndChanged, $moveMade, $scoreChanged} from "./events";
+import {
+    $boardChanged,
+    $isContinueGameChanged,
+    $isGameEndChanged,
+    $moveMade,
+    $resetGameStatesChanged,
+    $scoreChanged
+} from "./events";
 import {sample} from "effector";
-import {GameGate} from "./gate";
 import {
     generateTileFx,
     removeAnimationsFx,
@@ -15,6 +21,8 @@ import {
 import {debounce, delay} from "patronum";
 import {moveDuration} from "../../utils/moveDuration";
 import {APPEAR_DURATION, RESET_GAME_DURATION, SYNC_GAME} from "../../constants/game";
+import {app} from "../domain";
+import {$gameStarted} from "../events";
 
 // Finish out of energy page
 // Rewards Page
@@ -36,17 +44,17 @@ import {APPEAR_DURATION, RESET_GAME_DURATION, SYNC_GAME} from "../../constants/g
 //
 
 export const $board = gameDomain.createStore<TileDto[][]>([])
-    .on($boardChanged, (_, result) => result)
-    .reset(GameGate.close);
+    .on($boardChanged, (_, result) => result);
 
 export const $score = gameDomain.createStore<number>(0)
-    .on($scoreChanged, (_, result) => result)
-    .reset(GameGate.close);
+    .on($scoreChanged, (_, result) => result);
 
 export const $isEndGame = gameDomain.createStore<boolean>(false)
-    .on($isGameEndChanged, (_, result) => result)
-    .reset(GameGate.close);
+    .on($isGameEndChanged, (_, result) => result);
 
+export const $isContinueGame = app.createStore<boolean>(false)
+    .on($isContinueGameChanged, (_, result) => result)
+    .on($gameStarted, (_, result) => true);
 
 sample({
     clock: $moveMade,
@@ -81,6 +89,11 @@ sample({
     source: $isGameEndChanged,
     filter: (result) => result,
     target: setEndGameActionsFx
+});
+
+sample({
+    source: $resetGameStatesChanged,
+    target: resetGameFx
 })
 //
 // sample({

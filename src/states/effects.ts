@@ -4,9 +4,12 @@ import {gameDomain} from "./game/domain";
 import {$energy} from "./home/stores";
 import {Pages} from "../constants/pages";
 import {getEnergyFx, getScoreFx, reduceEnergyFx} from "./home/effects";
-import {continueGameOnStartFx} from "./game/effects";
+import {continueGameOnStartFx, resetGameFx} from "./game/effects";
 import Container from "../containers/container";
 import {$totalScoreChanged} from "./home/events";
+import {getLeaderboardFx} from "./leaderboard/effects";
+import "./user/sample";
+import {getReferralFx} from "./referral/effects";
 
 // new columns created_at (ct)
 // new referral_type (rt)
@@ -28,7 +31,7 @@ import {$totalScoreChanged} from "./home/events";
 // referrals job use github actions
 // -- get from firestore data about referrals
 // -- rewrite file index.json
-// -- push data to specified repository
+// -- push data to specified repo
 // -- loader should be in .gitignore
 // -- fetching operation works: get all referral_type (REFERRAL) and created_at by x days
 
@@ -69,13 +72,17 @@ export const initGameFx = app.createEffect(async () => {
 // make it impossible to save total result more than once in the game
 export const loadGameDataFx = app.createEffect(async () => {
     try {
-        const [, _, isContinue] = await Promise.all([
+        const [, , , _, isContinue] = await Promise.all([
+                getReferralFx(),
+                getLeaderboardFx(),
                 initGameFx(),
                 getEnergyFx(),
                 continueGameOnStartFx()
             ]
         )
-        $pageChanged(isContinue ? Pages.GAME : Pages.HOME)
+        $pageChanged({
+            page: Pages.HOME
+        })
     } catch (e) {
         console.log(`GOT THE ERROR !!!! ${e}`)
     }
@@ -85,11 +92,15 @@ export const loadGameDataFx = app.createEffect(async () => {
 export const startGameFx = gameDomain.createEffect(async () => {
     const energy = $energy.getState();
     if (energy.energy >= 1) {
-        $pageChanged(Pages.GAME)
+        $pageChanged({
+            page: Pages.GAME
+        })
         await reduceEnergyFx();
         return true;
     } else {
-        $pageChanged(Pages.OUTENERGY)
+        $pageChanged({
+            page: Pages.OUTENERGY
+        })
     }
     return false;
 });

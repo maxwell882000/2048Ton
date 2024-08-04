@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8"/>
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
     <meta name="viewport"
@@ -52,8 +53,42 @@
 
 <script>
     Telegram.WebApp.expand()
-    window.addEventListener("touchmove", (e) => e.preventDefault(), {passive: false});
-    window.scrollTo(0, 100);
+
+    function hasParentWithClass(elem, className) {
+        try {
+            if (elem) {
+                let element = elem
+
+                while (element) {
+                    if (element.classList && element.classList.contains(className)) {
+                        console.log(`A parent with class '${className}' was found.`);
+                        return true;
+                    }
+                    element = element.parentNode; // Move to the parent node
+                }
+
+                console.log(`No parent with class '${className}' was found.`);
+                return false;
+            }
+            return false;
+        } catch (e) {
+            return false;
+        }
+
+    }
+
+
+    window.addEventListener("touchmove", (e) => {
+        if (!hasParentWithClass(e.target, 'scroll-element'))
+            e.preventDefault()
+    }, {passive: false});
+
+    window.addEventListener("wheel", (e) => {
+        if (!hasParentWithClass(e.target, 'scroll-element'))
+            e.preventDefault()
+    }, {passive: false});
+    // window.scrollTo(0, 100);
+    window.Telegram.WebApp.enableClosingConfirmation();
     Telegram.WebApp.ready()
 </script>
 </html>

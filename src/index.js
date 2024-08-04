@@ -10,6 +10,7 @@ import App from "./App";
 import {Pages} from "./constants/pages";
 import {Start} from "./pages/start/Start";
 import {OutEnergy} from "./pages/outenergy/OutEnergy";
+import {RefAndLead} from "./pages/refAndLead/refAndLead";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: Pages.OUTENERGY,
                 element: <OutEnergy/>,
+            },
+            {
+                path: Pages.REFANDLEADER,
+                element: <RefAndLead/>,
             },
         ]
     },

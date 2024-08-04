@@ -23,7 +23,7 @@ export function getValueCloudStorage<V>(key: string) {
             console.log(`getValueCloudStorage ${key}`);
             Telegram.WebApp.CloudStorage.getItem(key, (errors, result) => {
                 {
-                    console.log(`RESULT IS RECIVIED ${key} ${result} ${errors} 3`)
+                    console.log(`RESULT IS RECIVIED ${key} ${result} ${errors} `)
                     if (errors == null) {
                         resolve(result ? JSON.parse(result) : null);
                     } else {

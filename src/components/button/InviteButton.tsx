@@ -10,7 +10,6 @@ export const InviteButton = () => {
         const url = IS_LOCAL ?
             `https://t.me/share/url?text=${text}&url=${encodeURI(`https://t.me/Ton_2048test_bot/start?startapp=ref-${getTelegramId()}`)}&text=${text}` :
             `https://t.me/share/url?text=${text}&url=${encodeURI(`https://t.me/T2048Bot/start?startapp=ref-${getTelegramId()}`)}`;
-        console.log(url);
         Telegram.WebApp.openTelegramLink(
             encodeURI(url)
         )

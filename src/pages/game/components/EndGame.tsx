@@ -3,12 +3,14 @@ import {Score} from "./Score";
 import PlayAgainButton from "../../../components/button/PlayAgain";
 import React from "react";
 import {HomeButton} from "../../../components/button/HomeButton";
+import {$resetGameStatesChanged} from "../../../states/game/events";
+import {useUnit} from "effector-react";
+import {$gameStarted} from "../../../states/events";
 
-interface EndGameProps {
-    gameReset: () => void
-}
+export const EndGame = () => {
 
-export const EndGame = ({gameReset}: EndGameProps) => {
+    const [gameStarted, resetGameStatesChanged] = useUnit([$gameStarted, $resetGameStatesChanged])
+
     return (
         <>
             <div className=" relative shadow-b-container bg-white w-[11.938rem] h-[13.541rem] flex flex-col
@@ -22,8 +24,8 @@ export const EndGame = ({gameReset}: EndGameProps) => {
                         <Score style="lg"></Score>
                     </div>
                     <div className={`flex space-x-2 `}>
-                        <HomeButton></HomeButton>
-                        <PlayAgainButton onClick={gameReset}></PlayAgainButton>
+                        <HomeButton onClick={resetGameStatesChanged}></HomeButton>
+                        <PlayAgainButton onClick={gameStarted}></PlayAgainButton>
                     </div>
                 </div>
             </div>

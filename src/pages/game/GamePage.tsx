@@ -10,14 +10,14 @@ import {GameGate} from "../../states/game/gate";
 
 const GamePage = () => {
     let {onTouchEnd, onTouchMove, onTouchStart} = useMove();
-    let {score, board, emptyBoard, isEndGame, gameReset} = useGame();
+    let {board, emptyBoard, isEndGame} = useGame();
     return (
         <>
             <GameGate></GameGate>
             <div>
                 <div
                     className={`absolute top-0 left-0 h-screen w-screen flex  justify-center items-center  transition-opacity duration-1000  ${isEndGame ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                    <EndGame gameReset={gameReset}></EndGame>
+                    <EndGame></EndGame>
                 </div>
                 <div
                     onTouchStart={onTouchStart}
@@ -53,7 +53,6 @@ const GamePage = () => {
                 </div>
             </div>
         </>
-
     );
 };
 

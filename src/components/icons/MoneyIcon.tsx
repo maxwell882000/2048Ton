@@ -1,7 +1,12 @@
-export const MoneyIcon = () => {
+interface MoneyIconProps {
+    width?: number;
+    height?: number;
+}
+
+export const MoneyIcon = ({width = 38, height = 41}: MoneyIconProps) => {
     return (
         <>
-            <svg width="38" height="41" viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width={width} height={height} viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M27.0091 3.93554L21.355 2.82086L21.0281 4.41051C15.7575 6.26332 11.2342 11.7832 9.77221 18.927C8.3102 26.0708 10.3191 32.8702 14.448 36.5843L14.1234 38.1761L19.7884 39.2908C27.3097 40.7756 35.0272 34.0619 37.0252 24.2993C39.0232 14.5368 34.5304 5.41822 27.0091 3.93554Z"
                     fill="#E86124"/>

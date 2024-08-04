@@ -8,11 +8,19 @@ import {Pages} from "../../constants/pages";
 interface HomeButtonProps {
     width?: string
     children?: React.ReactNode;
+    onClick?: () => void;
 }
 
-export const HomeButton = ({children, width = "w-[2.5em]"}: HomeButtonProps) => {
+export const HomeButton = ({children, width = "w-[2.5em]", onClick}: HomeButtonProps) => {
     const [pageChanged] = useUnit([$pageChanged]);
-    return <Button onClick={() => pageChanged(Pages.HOME)} width={width} height={"h-[2.5em]"}
+    return <Button onClick={() => {
+        if (onClick) {
+            onClick();
+        }
+        pageChanged({
+            page: Pages.HOME
+        })
+    }} width={width} height={"h-[2.5em]"}
                    fontSize={"text-[1rem]"}
                    color={"#FFDB0A"}
                    shadow={"shadow-b-button-orange"}>

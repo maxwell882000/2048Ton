@@ -10,6 +10,7 @@ module.exports = {
         },
         extend: {
             boxShadow: {
+                'b-button-label': '0 0.25rem 0 rgba(0, 0, 0, 0.25), 0 -0.25rem 0 #A75CF4 inset',
                 'b-button': '0 0.25rem 0 rgba(0, 0, 0, 0.25), 0 -0.25rem 0 #4EC306 inset',
                 'b-button-orange': '0 0.25rem 0 rgba(0, 0, 0, 0.25), 0 -0.25rem 0 #FFB213 inset',
                 'b-button-hover': '0 0.25rem 0 rgba(0, 0, 0, 0.25)',

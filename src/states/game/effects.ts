@@ -1,6 +1,6 @@
 import {gameDomain} from "./domain";
 import Container from "../../containers/container";
-import {$boardChanged, $isGameEndChanged, $scoreChanged} from "./events";
+import {$boardChanged, $isContinueGameChanged, $isGameEndChanged, $scoreChanged} from "./events";
 import {boardApiFactory} from "../../factory/game/boardApiFactory";
 import {tileDtoFactory} from "../../factory/game/tileDtoFactory";
 import {$isEndGame} from "./stores";
@@ -20,19 +20,16 @@ export const continueGameOnStartFx = gameDomain.createEffect(async () => {
         boardService.continueGame(board, positionBoard);
         $boardChanged(boardService.getCopyBoard());
         $scoreChanged(boardService.getScore());
+        $isContinueGameChanged(true);
         return true;
     }
     return false;
 });
 
-export const setBoardApiFx = gameDomain.createEffect(async () => {
-    if (!$isEndGame.getState())
-        await boardApi.setBoards(boardApiFactory(boardService))
-});
-
 export const setEndGameActionsFx = gameDomain.createEffect(async () => {
     console.log("setEndGameActionsFx how many times")
     try {
+        $isContinueGameChanged(false);
         const [_, score] = await Promise.all([
             boardApi.removeBoards(),
             scoreApi.setTotalScore({
@@ -45,6 +42,12 @@ export const setEndGameActionsFx = gameDomain.createEffect(async () => {
     }
 
 });
+
+export const setBoardApiFx = gameDomain.createEffect(async () => {
+    if (!$isEndGame.getState())
+        await boardApi.setBoards(boardApiFactory(boardService))
+});
+
 
 export const generateTileFx = gameDomain.createEffect(() => {
     const newBoard = boardService.generateTile();
