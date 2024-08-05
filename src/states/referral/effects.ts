@@ -23,7 +23,12 @@ export const getReferralFx = referralApp.createEffect(async () => {
 })
 
 export const referralRewardAcceptedFx = referralApp.createEffect(async (referral: ReferralDto) => {
-    await referralApi.acceptReward(referral.referralId);
-    const score = await scoreApi.setTotalScore({score: REFERRAL_REWARD});
-    $totalScoreChanged(score);
+    try {
+        await referralApi.acceptReward(referral.referralId);
+        const score = await scoreApi.setTotalScore({score: REFERRAL_REWARD});
+        $totalScoreChanged(score);
+    } catch (err) {
+        console.error(err);
+    }
+
 })

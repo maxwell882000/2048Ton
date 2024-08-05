@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from "./Button";
+import OrangeButton from "./OrangeButton";
 
 interface ContinueGameButtonProps {
     width?: string,
@@ -9,11 +9,10 @@ interface ContinueGameButtonProps {
 const ContinueGameButton = (props: ContinueGameButtonProps) => {
 
     return (
-        <Button color={"linear-gradient(-130deg, #FFDB0A  50%, #FFEE88 50%)"}
-                shadow={"shadow-b-button-orange"}
-                {...props}>
+        <OrangeButton
+            {...props}>
             continue
-        </Button>
+        </OrangeButton>
     );
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import {MoneyIcon} from "../../../../components/icons/MoneyIcon";
 import {LeaderboardDto} from "../../../../dtos/leaderboard/leaderboardDto";
 import {ContainerItem} from "../ContainerItem";
+import {formatNumber} from "../../../../utils/formatNumber";
 
 interface LeaderProps {
     leader: LeaderboardDto,
@@ -18,7 +19,7 @@ export const Leader = ({leader, place}: LeaderProps) => {
 
                 </div>
                 <span className="text-[1.25rem] text-[#60CFFF]">
-                                                    {leader.score}
+                                                    {formatNumber(leader.score, '0,0')}
                                                 </span>
             </div>
         </div>

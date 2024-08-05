@@ -32,14 +32,17 @@ export class ReferralApi {
             await setValueBatchFirestore(activatedReferrals);
             await setValueCloudStorage(referralMethod, referrals);
         }
+
         return Object.values(referrals.referrals);
     }
 
     async acceptReward(referralId: number) {
         const referrals = await this.getReferralFromCloudStorage();
         const ref = referrals.referrals[referralId];
-        ref.ac = true;
-        await setValueCloudStorage(referralMethod, referrals)
+        if (ref) {
+            ref.ac = true;
+            await setValueCloudStorage(referralMethod, referrals)
+        }
     }
 
     private async getReferralFromCloudStorage(): Promise<ReferralApiCloudStorageDto> {

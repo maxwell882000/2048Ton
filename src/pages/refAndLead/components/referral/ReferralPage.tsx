@@ -7,6 +7,8 @@ import {getTelegramId} from "../../../../infrustructure/telegram/telegram_user";
 import {ContainerItem} from "../ContainerItem";
 import {useUnit} from "effector-react";
 import {$referrals} from "../../../../states/referral/store";
+import {REFERRAL_REWARD} from "../../../../constants/game";
+import {formatNumber} from "../../../../utils/formatNumber";
 
 export const ReferralPage = () => {
     const [referrals] = useUnit([$referrals]);
@@ -17,7 +19,7 @@ export const ReferralPage = () => {
         textArea.select();
         try {
             document.execCommand('copy');
-            Telegram.WebApp.showAlert("Text copied to clipboard!")
+            Telegram.WebApp.showAlert("Referral link copied to clipboard !")
         } catch (err) {
             alert('Failed to copy text: ' + err);
         }
@@ -28,7 +30,7 @@ export const ReferralPage = () => {
         <div className={"bg-white h-[4.5rem] py-1 px-4  w-full rounded-[1.313rem] shadow-b-container-orange "}>
             <div className="flex h-full justify-center space-x-2 items-center">
                 <CoinsIcon></CoinsIcon>
-                <span className="text-[1.25rem] uppercase text-[#228AED]">25.000 FOR EACH INVITATION</span>
+                <span className="text-[1.25rem] uppercase text-[#228AED]">{formatNumber(REFERRAL_REWARD, '0,0')} FOR EACH INVITATION</span>
             </div>
         </div>
         <div className="text-white mt-4">
