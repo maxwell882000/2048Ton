@@ -3,7 +3,7 @@ import {CoinsIcon} from "../../../../components/icons/CoinsIcon";
 import {Referral} from "./Referral";
 import {InviteButton} from "../../../../components/button/InviteButton";
 import {CopyButton} from "../../../../components/button/CopyButton";
-import {getTelegramId} from "../../../../infrustructure/telegram/telegram_user";
+import {getTelegramId} from "../../../../infrastructure/telegram/telegram_user";
 import {ContainerItem} from "../ContainerItem";
 import {useUnit} from "effector-react";
 import {$referrals} from "../../../../states/referral/store";

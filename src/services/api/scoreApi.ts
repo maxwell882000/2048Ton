@@ -1,4 +1,4 @@
-import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/telegram/telegram_storage";
+import {getValueCloudStorage, setValueCloudStorage} from "../../infrastructure/telegram/telegram_storage";
 
 interface ScoreApiDto {
     score: number;

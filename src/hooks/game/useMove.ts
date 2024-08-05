@@ -4,6 +4,9 @@ import Container from "../../containers/container";
 import {TurnDto} from "../../dtos/game/turnDto";
 import {useUnit} from "effector-react/effector-react.umd";
 import {$moveMade} from "../../states/game/events";
+import _debounce from "lodash/debounce";
+
+const DELAY_MOVE = 60;
 
 export function useMove() {
     const tileService = Container.getTileService();
@@ -11,26 +14,26 @@ export function useMove() {
     const [touchEnd, setTouchEnd] = useState<CoordinateDto | null>();
     const [moveMade] = useUnit([$moveMade])
 
-
-    const handleSwipe = useCallback(() => {
-        if (!touchStart || !touchEnd) return;
-        const distanceX = touchStart.x - touchEnd.x;
-        const distanceY = touchStart.y - touchEnd.y;
-        const isHorizontal = Math.abs(distanceX) > Math.abs(distanceY);
-        const isVertical = !isHorizontal;
-        if (distanceX > 20 && isHorizontal) {
-            tileService.slideTo(TurnDto.LEFT);
-        } else if (distanceX < -20 && isHorizontal) {
-            tileService.slideTo(TurnDto.RIGHT);
-        } else if (distanceY > 20 && isVertical) {
-            tileService.slideTo(TurnDto.UP);
-        } else if (distanceY < -20 && isVertical) {
-            tileService.slideTo(TurnDto.DOWN);
-        } else {
-            return;
-        }
-        moveMade();
-    }, [touchStart, touchEnd]);
+    const handleSwipe = useCallback(_debounce(() => {
+            if (!touchStart || !touchEnd) return;
+            const distanceX = touchStart.x - touchEnd.x;
+            const distanceY = touchStart.y - touchEnd.y;
+            const isHorizontal = Math.abs(distanceX) > Math.abs(distanceY);
+            const isVertical = !isHorizontal;
+            if (distanceX > 20 && isHorizontal) {
+                tileService.slideTo(TurnDto.LEFT);
+            } else if (distanceX < -20 && isHorizontal) {
+                tileService.slideTo(TurnDto.RIGHT);
+            } else if (distanceY > 20 && isVertical) {
+                tileService.slideTo(TurnDto.UP);
+            } else if (distanceY < -20 && isVertical) {
+                tileService.slideTo(TurnDto.DOWN);
+            } else {
+                return;
+            }
+            moveMade();
+        }, DELAY_MOVE), [touchStart, touchEnd]
+    );
 
 
     const onTouchStart = (e: any) => {
@@ -54,7 +57,7 @@ export function useMove() {
         setTouchEnd(null);
     };
 
-    const handleKeyDown = useCallback((event: any) => {
+    const handleKeyDown = useCallback(_debounce((event: any) => {
         switch (event.code) {
             case 'ArrowLeft':
                 tileService.slideTo(TurnDto.LEFT);
@@ -72,7 +75,7 @@ export function useMove() {
                 return;
         }
         moveMade();
-    }, []);
+    }, DELAY_MOVE), []);
 
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);

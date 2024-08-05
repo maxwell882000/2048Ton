@@ -1,9 +1,9 @@
-import {fetchMethods} from "../../infrustructure/fetch/fetchMethods";
+import {fetchMethods} from "../../infrastructure/fetch/fetchMethods";
 import {ReferralApiCloudStorageDto, ReferralApiDto} from "../../dtos/api/referralApiDto";
-import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/telegram/telegram_storage";
-import {getTelegramUser} from "../../infrustructure/telegram/telegram_user";
+import {getValueCloudStorage, setValueCloudStorage} from "../../infrastructure/telegram/telegram_storage";
+import {getTelegramUser} from "../../infrastructure/telegram/telegram_user";
 import moment from "moment";
-import {BatchWriteDto, setValueBatchFirestore} from "../../infrustructure/firebase/firestore";
+import {BatchWriteDto, setValueBatchFirestore} from "../../infrastructure/firebase/firestore";
 
 const referralMethod = "referrals"
 //

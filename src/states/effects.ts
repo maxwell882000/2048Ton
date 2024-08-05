@@ -4,7 +4,7 @@ import {gameDomain} from "./game/domain";
 import {$energy} from "./home/stores";
 import {Pages} from "../constants/pages";
 import {getEnergyFx, getScoreFx, reduceEnergyFx} from "./home/effects";
-import {continueGameOnStartFx, resetGameFx} from "./game/effects";
+import {continueGameOnStartFx} from "./game/effects";
 import Container from "../containers/container";
 import {$totalScoreChanged} from "./home/events";
 import {getLeaderboardFx} from "./leaderboard/effects";
@@ -58,6 +58,7 @@ import {getReferralFx} from "./referral/effects";
 //
 const initApi = Container.getUserApi();
 const scoreApi = Container.getScoreApi();
+const musicService = Container.getMusicService();
 export const initGameFx = app.createEffect(async () => {
     const user = await initApi.sync();
     if (user) {
@@ -72,7 +73,8 @@ export const initGameFx = app.createEffect(async () => {
 // make it impossible to save total result more than once in the game
 export const loadGameDataFx = app.createEffect(async () => {
     try {
-        const [, , , _, isContinue] = await Promise.all([
+        await Promise.all([
+                musicService.loadMergeMusic(),
                 getReferralFx(),
                 getLeaderboardFx(),
                 initGameFx(),

@@ -8,8 +8,9 @@ import {EnergyService} from "../services/game/energyService";
 import {UserApi} from "../services/api/userApi";
 import {LeaderboardApi} from "../services/api/leaderboardApi";
 import {ReferralApi} from "../services/api/referralApi";
+import {MusicService} from "../services/game/musicService";
+import {MusicInfra} from "../infrastructure/audio/musicInfra";
 
-// container.ts
 class Container {
     private static instance: Container;
     private readonly boardService: BoardService;
@@ -20,8 +21,9 @@ class Container {
     private readonly energyApi: EnergyApi;
     private readonly energyService: EnergyService;
     private readonly userApi: UserApi;
-    private leaderboardApi: LeaderboardApi;
-    private referralApi: ReferralApi;
+    private readonly leaderboardApi: LeaderboardApi;
+    private readonly referralApi: ReferralApi;
+    private readonly musicService: MusicService
 
     private constructor() {
         this.boardService = new BoardService();
@@ -34,6 +36,7 @@ class Container {
         this.userApi = new UserApi();
         this.leaderboardApi = new LeaderboardApi();
         this.referralApi = new ReferralApi();
+        this.musicService = new MusicService(new MusicInfra());
     }
 
     public static getInstance(): Container {
@@ -81,6 +84,10 @@ class Container {
 
     public getLeaderboardApi(): LeaderboardApi {
         return this.leaderboardApi;
+    }
+
+    public getMusicService(): MusicService {
+        return this.musicService;
     }
 
 }

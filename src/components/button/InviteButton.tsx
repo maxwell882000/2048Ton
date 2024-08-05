@@ -1,4 +1,4 @@
-import {getTelegramId} from "../../infrustructure/telegram/telegram_user";
+import {getTelegramId} from "../../infrastructure/telegram/telegram_user";
 import {Button} from "./Button";
 import {IS_LOCAL} from "../../constants/app";
 

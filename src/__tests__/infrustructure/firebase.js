@@ -1,5 +1,5 @@
-import {getValueFirebase} from "../../infrustructure/firebase/firebase_db";
-import {setValueFirestore} from "../../infrustructure/firebase/firestore";
+import {getValueFirebase} from "../../infrastructure/firebase/firebase_db";
+import {setValueFirestore} from "../../infrastructure/firebase/firestore";
 
 
 test("check firebase getting value", async () => {

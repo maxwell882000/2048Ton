@@ -10,6 +10,7 @@ const boardService = Container.getBoardService();
 const testEndService = Container.getTestGameService();
 const boardApi = Container.getBoardApi();
 const scoreApi = Container.getScoreApi();
+const musicService = Container.getMusicService();
 
 
 export const continueGameOnStartFx = gameDomain.createEffect(async () => {
@@ -60,7 +61,9 @@ export const removeAnimationsFx = gameDomain.createEffect(() => {
 })
 
 export const setBoardFx = gameDomain.createEffect(() => {
-    $isGameEndChanged(testEndService.testEndGame(boardService.getCopyPositionBoard()));
+    const isEndGame = testEndService.testEndGame(boardService.getCopyPositionBoard())
+    $isGameEndChanged(isEndGame);
+    if (!isEndGame) musicService.playMergeMusic();
     $scoreChanged(boardService.getScore())
     $boardChanged(boardService.getCopyBoard());
 })

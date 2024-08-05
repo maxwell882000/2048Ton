@@ -1,7 +1,7 @@
-import {getTelegramId, getTelegramUser} from "../../infrustructure/telegram/telegram_user";
-import {setValueFirestore} from "../../infrustructure/firebase/firestore";
-import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/telegram/telegram_storage";
-import {getTelegramParams} from "../../infrustructure/telegram/telegram_params";
+import {getTelegramId, getTelegramUser} from "../../infrastructure/telegram/telegram_user";
+import {setValueFirestore} from "../../infrastructure/firebase/firestore";
+import {getValueCloudStorage, setValueCloudStorage} from "../../infrastructure/telegram/telegram_storage";
+import {getTelegramParams} from "../../infrastructure/telegram/telegram_params";
 import {REFERRAL_REWARD} from "../../constants/game";
 import {ReferrerStatus, UserApiDto} from "../../dtos/api/userApiDto";
 

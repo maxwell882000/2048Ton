@@ -1,6 +1,6 @@
 import {LeaderboardApiCloudStorageDto, LeaderboardApiDto} from "../../dtos/api/leaderboardApiDto";
-import {fetchMethods} from "../../infrustructure/fetch/fetchMethods";
-import {getValueCloudStorage, setValueCloudStorage} from "../../infrustructure/telegram/telegram_storage";
+import {fetchMethods} from "../../infrastructure/fetch/fetchMethods";
+import {getValueCloudStorage, setValueCloudStorage} from "../../infrastructure/telegram/telegram_storage";
 import moment from "moment";
 
 const leaderboardMethod = "leaderboards"
