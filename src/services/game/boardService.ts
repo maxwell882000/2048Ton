@@ -5,10 +5,12 @@ import {createUniqueIdGenerator} from "../../utils/createUniqueIdGenerator";
 export class BoardService {
     private board: TileDto[][];
     private positionBoard: TileDto[][];
+    private oldPositionBoard: TileDto[][] | null;
 
     constructor() {
         this.board = this.fillBoard();
         this.positionBoard = this.getCopyBoard();
+        this.oldPositionBoard = null;
     }
 
     generateBoard() {
@@ -32,12 +34,20 @@ export class BoardService {
     }
 
     setPositionBoard(board: TileDto[][]) {
+        this.oldPositionBoard = this.positionBoard;
         this.positionBoard = board;
+    }
+
+    positionChanged() {
+        return this.oldPositionBoard === null || this.positionBoard.some((r, row) =>
+            r.some((c, col) =>
+                c.uniqueId !== this.oldPositionBoard![row][col].uniqueId))
     }
 
     continueGame(board: TileDto[][], positionBoard: TileDto[][]) {
         this.board = board;
         this.positionBoard = positionBoard;
+        this.oldPositionBoard = this.positionBoard;
     }
 
     getCopyBoard() {
@@ -98,7 +108,7 @@ export class BoardService {
     }
 
     generateTile() {
-        if (!this.hasEmptyTile()) {
+        if (!this.hasEmptyTile() || !this.positionChanged()) {
             return this.board
         }
         let r, c;
