@@ -21,6 +21,6 @@ export class MusicInfra {
         const source = this.audioContext.createBufferSource();
         source.buffer = this.buffer;
         source.connect(this.audioContext.destination);
-        source.start();
+        source.start(0);
     }
 }

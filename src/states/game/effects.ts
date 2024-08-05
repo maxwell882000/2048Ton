@@ -63,7 +63,7 @@ export const removeAnimationsFx = gameDomain.createEffect(() => {
 export const setBoardFx = gameDomain.createEffect(() => {
     const isEndGame = testEndService.testEndGame(boardService.getCopyPositionBoard())
     $isGameEndChanged(isEndGame);
-    if (boardService.positionChanged()) musicService.playMergeMusic();
+    if (boardService.positionChangedOrMerged()) musicService.playMergeMusic();
     $scoreChanged(boardService.getScore())
     $boardChanged(boardService.getCopyBoard());
 })

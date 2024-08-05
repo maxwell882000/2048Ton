@@ -1,7 +1,7 @@
 import {COLUMN, ROW, TILE_SIZE} from "../../constants/game";
 import {TileDto} from "../../dtos/game/tileDto";
 import {createUniqueIdGenerator} from "../../utils/createUniqueIdGenerator";
-
+// all tiles that are merging not working transition
 export class BoardService {
     private board: TileDto[][];
     private positionBoard: TileDto[][];
@@ -38,7 +38,15 @@ export class BoardService {
         this.positionBoard = board;
     }
 
-    positionChanged() {
+    positionChangedOrMerged() {
+        return this.oldPositionBoard === null || this.positionBoard.some((r, row) =>
+            r.some((c, col) =>
+                !(c.uniqueId === this.oldPositionBoard![row][col].uniqueId
+                    && c.value === this.oldPositionBoard![row][col].value)
+            ))
+    }
+
+    private positionChanged() {
         return this.oldPositionBoard === null || this.positionBoard.some((r, row) =>
             r.some((c, col) =>
                 c.uniqueId !== this.oldPositionBoard![row][col].uniqueId))
