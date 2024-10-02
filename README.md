@@ -17,7 +17,6 @@ This project is a **Mini Telegram Coin Tapper** built using **React**, **TypeScr
 - **React** - Frontend framework
 - **TypeScript** - Type safety and development efficiency
 - **Vite** - Fast build tool for development and production
-- **ag-Grid** (optional) - For handling grids or lists of users, scores, and referrals (if needed)
 
 ## Installation
 
