@@ -29,7 +29,7 @@ To run the app locally:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/telegram-coin-tapper.git
+     git clone  https://github.com/maxwell882000/2048Ton.git
     ```
 
 2. Navigate to the project directory:
