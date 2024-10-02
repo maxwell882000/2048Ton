@@ -4,6 +4,10 @@
 
 This project is a **Mini Telegram App** built using **React**, **TypeScript**, and **Vite**. It simulates a 2047 game for Telegram users, with the possibility to add **referrals** and a **referrer** system. Users can play 2048 to gain coins, with the option to refer others to the game, earning rewards for both the referrer and the referee.
 
+## Check Real Example
+
+To see a real example of this concept, go to the [Telegram Bot Example](https://t.me/T2048Bot).
+
 ## Features
 
 - **Coin:** Users play 2048 to get coins and accumulate points.
