@@ -2,11 +2,11 @@
 
 ## Overview
 
-This project is a **Mini Telegram Coin Tapper** built using **React**, **TypeScript**, and **Vite**. It simulates a coin-tapping game for Telegram users, with the possibility to add **referrals** and a **referrer** system. Users can tap coins and gain points, with the option to refer others to the game, earning rewards for both the referrer and the referee.
+This project is a **Mini Telegram App** built using **React**, **TypeScript**, and **Vite**. It simulates a 2047 game for Telegram users, with the possibility to add **referrals** and a **referrer** system. Users can play 2048 to gain coins, with the option to refer others to the game, earning rewards for both the referrer and the referee.
 
 ## Features
 
-- **Coin Tapping:** Users tap coins and accumulate points.
+- **Coin:** Users play 2048 to get coins and accumulate points.
 - **Referrals:** Players can invite others to join using a referral link.
 - **Referrer System:** When a new user signs up using a referral link, the original referrer earns bonuses.
 - **Responsive UI:** Optimized for mobile and Telegram's in-app browser.
@@ -31,7 +31,7 @@ To run the app locally:
 2. Navigate to the project directory:
 
     ```bash
-    cd telegram-coin-tapper
+    cd 2048Ton
     ```
 
 3. Install dependencies:
@@ -50,7 +50,7 @@ To run the app locally:
 
 ## Usage
 
-1. Launch the app and start tapping coins.
+1. Launch the app and start playing.
 2. Create and share a referral link to invite others.
 3. Track referrals and bonuses via the referrer system.
 
