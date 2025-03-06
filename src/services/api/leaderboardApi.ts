@@ -16,7 +16,7 @@ export class LeaderboardApi {
                 const data = await fetchMethods<{ [key: number]: LeaderboardApiDto }>(leaderboardMethod);
                 leaderboard.leaderboard = Object.values(data);
                 leaderboard.expiry = moment().add('4', 'hours').toDate();
-                await setValueCloudStorage(leaderboardMethod, leaderboard);
+                // await setValueCloudStorage(leaderboardMethod, leaderboard);
             }
             console.log("LEADERBOARD RESULT", leaderboard);
             return leaderboard.leaderboard.sort((a, b) => b.s - a.s);
